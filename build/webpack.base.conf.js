@@ -57,10 +57,6 @@ module.exports = {
         exclude: /node_modules/
       },    
       {
-        test: /\.zha$/,
-        loader: 'style-loader!css-loader!sass-loader'
-      },
-      {
         test: /\.json$/,
         loader: 'json'
       },
@@ -83,11 +79,6 @@ module.exports = {
       }
     ]
   },
-  // 取消 eslint 代码检查配置工具
-  // eslint: {
-  //   // eslint 代码检查配置工具
-  //   formatter: require('eslint-friendly-formatter')
-  // },
   vue: {
     // .vue 文件配置 loader 及工具 (autoprefixer)
     loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
