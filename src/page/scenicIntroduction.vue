@@ -30,7 +30,7 @@
             this.done = true;
             let url = '/zhan/querySSSList';
             this.$http.get(url).then((response) => {
-                // 遍历数据，改变数据结构，套用同一天模板listTpl
+                // 遍历数据，改变数据结构，套用同一套模板listTpl
                 response.data.rows.forEach((item, index) => {
                   let tmp = {};
                   tmp['description'] = item['SS_DESCRIPTION'];

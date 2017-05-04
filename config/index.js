@@ -25,13 +25,14 @@ module.exports = {
     assetsPublicPath: '/',           // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
     proxyTable: {
         '/zhan': {
-            target: 'http://192.168.110.129:8080/JSY/h5/', 
+            // target: 'http://192.168.110.129:8080/JSY/h5/', 
+            target: 'http://192.168.110.71:8080/JSY/',
             changeOrigin: true,
             pathRewrite: {
                 '^/zhan': ''
             }
         }
-    },                  // 需要 proxyTable 代理的接口（可跨域）
+    }, // 需要 proxyTable 代理的接口（可跨域）
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)
