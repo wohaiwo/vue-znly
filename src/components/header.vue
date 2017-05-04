@@ -31,6 +31,7 @@
 		color: #595757;
 		background: #fff ;
 		text-align: center;
+		box-shadow: 0 2px 5px 2px rgba(0, 0, 0, .3);
 		box-sizing: border-box;
 		span {
 			font-size: 18px;

@@ -26,17 +26,17 @@
 		overflow: hidden;
 		box-sizing: border-box;
 		p {
+			left: 100%;
 			position: absolute;
-			left: 0;
 			white-space: nowrap;
-			animation-delay: 1s;
+			animation-delay: .5s;
 			animation-name: slide;
 			animation-duration: 8s;
 			animation-iteration-count: infinite;
 		}
 	}
 	@keyframes slide {
-		0% { right: 0; }
-		100% {right: 140%;}
+		0% { left: 100%; }
+		100% { left: -120%; }
 	}
 </style>

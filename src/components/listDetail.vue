@@ -7,6 +7,7 @@
                 <source :src="listDetail.audio" type="audio/mpeg" />
             </audio>
             <section v-html="listDetail.content"></section>
+            <review :id="detailId"></review>
         </div>
         <loading :show="done"></loading>
     </div>
@@ -15,6 +16,7 @@
 <script>
     import loading from '../components/loading.vue';
     import vHeader from '../components/header.vue';
+    import review from '../components/review.vue';
     export default {
         data() {
           return {
@@ -30,7 +32,7 @@
           }
         },
         components: {
-            loading, vHeader
+            loading, vHeader, review
         },
         created() {
             this.detailId = this.$route.params.id;
@@ -91,7 +93,7 @@
     .detail-body {
         width: 90%;
         padding: 10px;
-        margin-top: 60px;
+        margin: 60px auto 40px;
     }
   }
 </style>
