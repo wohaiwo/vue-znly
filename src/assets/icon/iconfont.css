@@ -1,0 +1,39 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1493794500617'); /* IE9*/
+  src: url('iconfont.eot?t=1493794500617#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1493794500617') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1493794500617') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1493794500617#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-back:before { content: "\e679"; }
+
+.icon-remind:before { content: "\e6b2"; }
+
+.icon-home:before { content: "\e6b8"; }
+
+.icon-cart:before { content: "\e698"; }
+
+.icon-pic:before { content: "\e6a8"; }
+
+.icon-set:before { content: "\e6ae"; }
+
+.icon-viewgallery:before { content: "\e6b4"; }
+
+.icon-community:before { content: "\e741"; }
+
+.icon-map:before { content: "\e715"; }
+
+.icon-share:before { content: "\e71d"; }
+
+.icon-store:before { content: "\e722"; }
+

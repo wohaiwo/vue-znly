@@ -1,0 +1,42 @@
+<template>
+	<div>
+		<p>景区当前游客数: <span>209</span>人， 预计今日游客总人数: <span>2817</span>人</p>
+	</div>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+
+			}
+		}
+	}
+</script>
+
+<style scoped lang="scss">
+	div {
+		width: 100%;
+		height:  20px;
+		padding: 0 4%;
+		margin-top: 40px;
+		font-size: 14px;
+		color: #ddd;
+		background: rgba(0, 0, 0, .4);
+		overflow: hidden;
+		box-sizing: border-box;
+		p {
+			position: absolute;
+			left: 0;
+			white-space: nowrap;
+			animation-delay: 1s;
+			animation-name: slide;
+			animation-duration: 8s;
+			animation-iteration-count: infinite;
+		}
+	}
+	@keyframes slide {
+		0% { right: 0; }
+		100% {right: 140%;}
+	}
+</style>
