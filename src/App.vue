@@ -26,6 +26,10 @@ import vHeader from './components/header'
 import userCount from './components/userCount'
 import vFooter from './components/footer.vue'
 import './static/lib/js/swiper.min.js'
+import './static/lib/css/swiper.min.css'
+import './static/lib/css/main.css'
+import './static/lib/css/reset.css'
+
 
 export default {
     data() {
