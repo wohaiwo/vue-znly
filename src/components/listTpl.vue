@@ -8,7 +8,7 @@
 					</router-link>
 					<aside>
 						<h3>{{ item.title }}</h3>
-						<p>{{  item.description }}</p>
+						<article>{{  item.description }}</article>
 					</aside>
 				</li>
 			</ul>
@@ -32,24 +32,25 @@
 </script>
 <style scoped lang="scss">
 	.list-tpl {
-		margin-top: 60px;
+		margin-top: 45px;
 		.list-item {
 			margin: 10px auto;
-			box-shadow: 0px 0px 1px solid #333;
 			list-style: none;
+			height: 100vh;
+			background: #EDEDED;	
 			li {
 				display: inline-block;
-				width: 94%;
-				padding: 4px 2%;
-				margin: 2% 3%;
-				box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
-				box-sizing: border-box;
+				width: 100%;
+				padding: 2%;
+				margin-bottom: 10px;
 				overflow: hidden;
+				box-sizing: border-box;
+				background: #fff;
 				a {
 					float: left;
-					width: 40vw;
+					width: 30vw;
 					height: 30vw;
-					margin-right: 2%;
+					margin-right: 3vw;
 					box-sizing: border-box;
 					img {
 						width: 100%;
@@ -64,14 +65,15 @@
 					text-overflow: ellipsis;
 					box-sizing: border-box;
 					h3 {
-						font-size: 16px;
+						color: #CD1940;
 						padding: 2px 0 5px 0;
-						color: #595757;
+						font-size: 16px;
+						font-weight: bold;
 					}
-					p {
-						margin-bottom: 8px;
-						font-size: 12px;
-						color: #999;
+					article {
+						height: 12vh;
+						font-size: 14px;
+						color: #000;
 						line-height: 1.5;
 						text-align: justify;
 					}

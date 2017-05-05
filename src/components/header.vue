@@ -28,10 +28,10 @@
 		height: 40px;
 		line-height: 40px;
 		
-		color: #595757;
+		color: #000;
 		background: #fff ;
 		text-align: center;
-		box-shadow: 0 2px 5px 2px rgba(0, 0, 0, .3);
+		border-bottom: 2px solid #ededed;
 		box-sizing: border-box;
 		span {
 			font-size: 18px;
@@ -42,6 +42,9 @@
 			left: 4%;
 			top: 50%;
 			transform: translateY(-50%);
+			i {
+				color: #CD1940;
+			}
 		}
 	}
 </style>
