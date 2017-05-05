@@ -26,7 +26,7 @@ module.exports = {
     proxyTable: {
         '/zhan': {
             // target: 'http://192.168.110.129:8080/JSY/h5/', 
-            target: 'http://192.168.110.71:8080/JSY/',
+            target: 'http://192.168.110.71:8080/JSY/h5/',
             changeOrigin: true,
             pathRewrite: {
                 '^/zhan': ''
