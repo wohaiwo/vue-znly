@@ -41,18 +41,17 @@ export default {
         return {
 
         }
-  },
+    },
     components: {
         vHeader, userCount,  vFooter
     },
     mounted() {
-    //初始化swiper
-    new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        loop: true
-    });
-  }
-
+        //初始化swiper
+        new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            loop: true
+        });
+    }
 }
 </script>
 
