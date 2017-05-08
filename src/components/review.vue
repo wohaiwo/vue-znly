@@ -14,7 +14,7 @@
 			<div class="mask"></div>
 			<div class="tipBox">
 				<header class="tipBox-title">
-					<h2>新增评论<span>x</span></h2>
+					<h2>新增评论<span><i class="iconfont">&#xe646;</i></span></h2>
 				</header>
 				<div class="tipBox-content">
 					<input type="text">

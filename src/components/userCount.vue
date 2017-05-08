@@ -1,6 +1,7 @@
-<template>
+ <template>
 	<div>
 		<p>景区当前游客数: <span>209</span>人， 预计今日游客总人数: <span>2817</span>人</p>
+		 
 	</div>
 </template>
 
@@ -8,8 +9,16 @@
 	export default {
 		data() {
 			return {
-
+				msg: ''
 			}
+		},
+		created() {
+			let url = '/zhan/statistics';
+			this.$http.get(url).then((response) => {
+				this.$data.msg = response.data.data.msg;
+			}, (response) => {
+				console.log('oops, data is error');
+			});
 		}
 	}
 </script>

@@ -2,10 +2,9 @@
     <div class="detail">
         <v-header goBack="true" :headTitle="listDetail.title"></v-header>
         <div class="audio-play" v-if="this.identifier == 1">
-            <i v-on:click="playAudio" class="iconfont">&#xe67c;</i>&nbsp;音频播放
-            <audio id="audio" loop="loop">
+            <i v-on:click="playAudio" class="iconfont">&#xe66b;</i>&nbsp;音频播放
+            <audio id="audio" loop="loop" :src="listDetail.audio">
                 你的浏览器不支持 <code>audio</code> 音频播放功能.
-                <source :src="listDetail.audio" type="audio/mpeg" />
             </audio>
         </div>
         <div class="detail-body" v-show="isShow">
@@ -19,7 +18,7 @@
 <script>
     import loading from '../components/loading.vue';
     import vHeader from '../components/header.vue';
-    import review from '../components/review.vue';
+    import review from '../components/review1.vue';
     export default {
         data() {
           return {
@@ -76,7 +75,6 @@
                 })
             },
             playAudio() {
-                debugger;
                 let audio = document.getElementById('audio');
                 var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
                     && audio.readyState > 2;
@@ -106,7 +104,7 @@
     .audio-play {
         width: 100%;
         color: #fff;
-        padding: 1% 4%;
+        padding: 2% 4%;
         margin-top: 40px;
         text-align: right;
         background: #000;
