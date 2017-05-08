@@ -9,41 +9,6 @@ const externalMap = resolve => require(['../page/externalMap.vue'], resolve);
 const service = resolve => require(['../page/service.vue'], resolve);
 
 // 定义路由
-const routes1 = [
-	{
-		path: '/',
-		component: App,
-	}, {
-		path: '/home',
-		name: 'home', 
-		component: home
-	}, {
-		path: '/scenic/introduction', 
-		name: 'introduction', 
-		component: introduction 
-	}, {
-		path: '/scenic/detail/:id/:identifier', 
-		name: 'listDetail', 
-		component: listDetail
-	}, {
-		path: '/travelBox',
-		name: 'travelBox', 
-		component: travelBox
-	}, {
-		path: '/externalMap',
-		name: 'externalMap',
-		component: externalMap
-	}, {
-		path: '/service/:type',
-		name: 'service',
-		component: service
-	}, {
-		path: '*', 
-		component: App
-	}
-]
-
-
 const routes = [
 	{
 		path: '/',

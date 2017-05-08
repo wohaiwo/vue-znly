@@ -20,7 +20,28 @@
         },
         computed: {
             headTitle: function() {     
-                return this.$data.type == 7 ? '周边景点' : '住宿，餐饮';
+                let type = `${this.type}`;
+                switch(type) {
+                    case '7':
+                        type = '周边景点';
+                        break;
+                    case '3':
+                        type = '公告';
+                        break;
+                    case '6':
+                        type = '餐饮、住宿';
+                        break;
+                    case '13':
+                        type = '门票';
+                        break;
+                    case '14':
+                        type = '特色商品';
+                        break;
+                    case '15':
+                        type = '景区服务';
+                        break;
+                }
+                return type;
             },
         },
         components: {
