@@ -1,11 +1,14 @@
 <template>
 	<div class="reviews" v-show="isShow">
 		<ul>
-			<li>阅读100</li>
+			<li><i class="iconfont">&#xe69e;</i>100</li>
 			<li><i class="iconfont">&#xe644;</i>60</li>
-			<li><i class="iconfont">&#xe761;</i>写评论</li>
-			<li><i class="iconfont">&#xe649;</i>评论数</li>
+			<li @click="showReviewBox"><i class="iconfont">&#xe761;</i>写评论</li>
+			<li><i class="iconfont">&#xe649;</i>25</li>
 		</ul>
+		<div v-show="isShowReviewBox" class="reviews-box">
+			
+		</div>
 	</div>
 </template>
 
@@ -72,14 +75,25 @@
 		height: 60px;
 		background: #F6F6F6;
 		ul  {
-			padding: 5%;
+			padding: 0 5%;
 			li {
 				display: inline-block;
-				width: 20%;
+				width: 25%;
 				height: 30px;
-				margin-right: 5%;
-				border-radius: 20%;
-				background: red;
+				line-height: 30px;
+				margin: 15px 4% 0 0;
+				text-align: center;
+				border-radius: 10%;
+				background: #fff;
+				box-sizing: border-box;
+				i {
+					margin-right: 5px;
+				}
+				&:last-child {
+					color: #e60012;
+					width: 13%;
+					margin-right: 0;
+				}
 			}
 		}
 	}

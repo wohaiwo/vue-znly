@@ -107,7 +107,6 @@
 	.slide-fade-enter, .slide-fade-leave-to{
 		opacity: 0;
 		transform: translate3d(-150px, 0, 0);
-
 	}
 
 </style>
