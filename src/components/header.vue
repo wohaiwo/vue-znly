@@ -10,16 +10,13 @@
         <span class="title-text" v-if="headTitle">{{headTitle}}</span>
         <transition name="slide-fade">
         <nav v-if="isShowSideBar">
-    		<router-link to="/scenic/introduction"><i class="iconfont">&#xe6fb;</i>景区介绍</router-link>
-    		<a href=""><i class="iconfont">&#xe64c;</i>景区服务</a>
-    		<a href=""><i class="iconfont">&#x3458;</i>景区公告</a>
-    		<a href=""><i class="iconfont">&#xe6b2;</i>门票预订</a>
-    		<a href=""><i class="iconfont">&#xe6af;</i>特色购物</a>
-    		<router-link to="/travelBox">
-	    		<i class="iconfont">&#xf02a1;</i>旅行百宝箱
-	    	</router-link>
+    	<router-link to="/scenic/introduction"><i class="iconfont">&#xe6fb;</i>景区介绍</router-link>
+		<router-link :to="{name: 'service', params: {type: 3}}"><i class="iconfont">&#xe64c;</i>景区公告</router-link>
+	    <router-link :to="{name: 'service', params: {type: 13}}"><i class="iconfont">&#xe6b2;</i>门票预订</router-link>
+        <router-link :to="{name: 'service', params: {type: 14}}"><i class="iconfont">&#xe6af;</i>特色购物</router-link>
+    	<router-link to="/travelBox"><i class="iconfont">&#xf02a1;</i>旅行百宝箱</router-link>
     		<a href=""><i class="iconfont">&#xe73d;</i>虚拟游览</a>
-    		<a href=""><i class="iconfont">&#xe621;</i>餐饮住宿</a>
+    		 <router-link :to="{name: 'service', params: {type: 6}}"><i class="iconfont">&#xe621;</i>餐饮住宿</router-link>
         </nav>
         </transition>
 	</header>
