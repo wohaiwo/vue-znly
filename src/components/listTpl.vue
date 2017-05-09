@@ -3,7 +3,7 @@
 		<div class="list-tpl">
 			<ul class="list-item">
 				<li v-for="item in items">
-			    	<router-link    :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
+			    	<router-link :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
 						<div class="list-image"  :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
 							<img :src="item.imageUrl">
 						</div>
@@ -48,7 +48,7 @@
 				overflow: hidden;
 				box-sizing: border-box;
 				background: #fff;
-				a {
+				.list-image {
 					float: left;
 					width: 30vw;
 					height: 30vw;

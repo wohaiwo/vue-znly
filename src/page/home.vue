@@ -83,7 +83,7 @@ export default {
                 display: inline-block;
                 width: 50px;
                 height: 50px;
-                padding: 5px;
+                padding: 3px;
                 color: #fff;
                 background: #e60012;
                 font-size: 14px;

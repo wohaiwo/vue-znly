@@ -2,7 +2,7 @@
 	<footer>
 	    <ul>
 	    	<li>
-		    	<router-link to="/home" :class=" pathName == navUrl[0] ? 'active' : ''">
+		    	<router-link :to="{name: 'service', params: {type: 15}}" :class=" pathName == navUrl[0] ? 'active' : ''">
 		    		<i class="iconfont">&#xe69b;</i><span>景区服务</span>
 		    	</router-link>
 	    	</li>
@@ -12,7 +12,7 @@
 	    		</router-link>
 	    	</li>
 	    	<li>
-	    		<router-link to="/travelBox" :class=" pathName == navUrl[2] ? 'active' : ''">
+	    		<router-link :to="{name: 'service', params: {type: 6}}" :class=" pathName == navUrl[2] ? 'active' : ''">
 	    			<i class="iconfont">&#xe621;</i><span>餐饮住宿</span>
 	    		</router-link>
 	    	</li>
