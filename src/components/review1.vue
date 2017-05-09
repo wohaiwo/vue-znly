@@ -1,14 +1,42 @@
 <template>
-	<div class="reviews" v-show="isShow">
-		<ul>
-			<li><i class="iconfont">&#xe69e;</i>100</li>
-			<li><i class="iconfont">&#xe644;</i>60</li>
-			<li @click="showReviewBox"><i class="iconfont">&#xe761;</i>写评论</li>
-			<li><i class="iconfont">&#xe649;</i>25</li>
-		</ul>
-		<div v-show="isShowReviewBox" class="reviews-box">
-			
+	<div>
+		<div class="reviews" v-show="isShow">
+			<ul>
+				<li><i class="iconfont">&#xe69e;</i>{{ visitCount }}</li>
+				<li @click="upVote" :class="{active: isActive }"><i class="iconfont">&#xe644;</i>{{ goodCount }}</li>
+				<li @click="showReviewBox"><i class="iconfont">&#xe761;</i>写评论</li>
+				<li @click="showCommentBox"><i class="iconfont">&#xe649;</i>{{ reviewCount }}</li>
+			</ul>
 		</div>
+		<transition name="slide-fade-down">
+			<div v-show="isShowReviewBox" class="reviews-box">
+				<div class="header">
+					<span @click="closeReviewBox">取消</span>
+					<span>评论</span>
+					<span @click="addReview" :class="isSend">发送</span>
+				</div>
+				<div class="body">
+					<textarea v-model="reviewContent" autofocus maxlength="120"  required></textarea>
+				</div>
+			</div>
+		</transition>
+		<transition name="slide-fade-right">
+		<div v-show="isShowCommentBox" class="comment-box">
+			<div @click="closeCommentBox" class="mask"></div>
+			<div class="comment-main">
+				<section v-for="(item, index) in reviewData">
+					<div class="reviews-author"><span>游客{{ index + 1 }}</span></div>
+					<div class="reviews-body">
+					    <p>
+					    	评分:&nbsp;<span class="reviews-rate">{{ showRate(item.SSR_POINT) }}</span>
+						</p>
+						<p>{{ item.SSR_CONTENT }}</p>
+						<p>{{ item.ENTRY_DATE_TIME  | time}}</p>
+					</div>
+				</section>
+			</div>
+		</div>
+		</transition>
 	</div>
 </template>
 
@@ -16,50 +44,101 @@
 	export default {
 		data() {
 			return {
-				isShow: true,
-				isShowReviewBox: false,
-				SS_NO: this.id,
-				isGetReviewBtn: true,		// 控制查看更多评论按钮只能出现一次
-				reviewData: [],
-				moreReviewData: []
+				isShow: true,				
+				SS_NO: this.id,				// 当前的景点id
+				isActive: false,
+				reviewData: [],   			// 评论数
+				visitCount: 0,    			// 访问数
+				goodCount: 0,	  			// 点赞数
+				reviewCount: 0,   			// 评论数
+				reviewContent: '', 			// 评论内容
+				isShowReviewBox: false,		// 是否显示评论框
+				isShowCommentBox: false     // 是否显示评论列表
 			}
 		},
 		props: ['id'],
 		mounted() {
 			this.initPage();
 		},
+		computed: {
+			isSend: function () {
+				return {
+					active:	!!this.$data.reviewContent.length
+				}   
+			}
+		},
+		filters: {
+			time: function(date) {
+				if(!date) return '';
+			    var date = new Date(date);//如果date为10位不需要乘1000
+			    var Y = date.getFullYear() + '-';
+			    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+			    	return Y + M + D;
+			}
+		},
 		methods: {
-			
+			showRate(rate) {
+				if(!rate) rate = 5; 
+				return "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate);
+			},
+			// 判断是否显示评论界面
 			showReviewBox() {
 				this.$data.isShowReviewBox = !this.$data.isShowReviewBox;
 			},
+			showCommentBox() {
+				this.$data.isShowCommentBox = !this.$data.isShowCommentBox;
+			},
+			// 关闭评论界面
 			closeReviewBox() {
 				this.$data.isShowReviewBox = false;
 			},
+			closeCommentBox() {
+				this.$data.isShowCommentBox = false;
+			},
+			// 添加评论
 			addReview() {
-				let url = `/zhan/saveSsr`;
+				let url = `/zhan/saveSSR`;
 				this.$http.post(url, {
-					SSR_NO: "",
 					SS_NO: this.$data.SS_NO,
-					SSR_CONTENT: "是19日杭州飞高雄，然后垦丁，花莲，九份，台北5月30日出。有同行"
+					SSR_CONTENT: this.$data.reviewContent
 				}).then( (response) => {
-					console.log('输出结果' + response);
+					this.closeReviewBox();
+					this.reviewContent = '';
 				}, (response) => {
 					console.log('opps Is Error: ' + response);
 				})
-			},
-			getMoreReview() {
-				this.$data.reviewData = this.$data.reviewData.concat(this.$data.moreReviewData);
-				this.$data.isGetReviewBtn = false;
 			},
 			initPage() {
-				let url = `/zhan/querySRList?id=${this.$data.SS_NO}`;
+				let url = `/zhan/querySSRList?id=${this.$data.SS_NO}`;
 				this.$http.get(url).then((response) => {
-					this.$data.reviewData = response.data.rows.slice(0, 2);
-					this.$data.moreReviewData = response.data.rows.slice(2);
+					this.$data.reviewData = response.data.rows;
 				}, (response) => {
 					console.log('opps Is Error: ' + response);
-				})
+				});
+				this.getUserVisit();	// 获取评论接口中 访问量和点赞数
+			},
+			// 获取当前景点的页面访问量点赞数以及评论数
+			getUserVisit() {
+				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}`;  // 游客访问量
+				this.$http.get(url).then((response) => {
+					this.$data.goodCount = response.data.GOODED_COUNT;
+					this.$data.visitCount = response.data.LOOKED_COUNT;
+					this.$data.isActive = response.data.IS_GOODED;
+					this.$data.reviewCount = response.data.REVIEW_COUNT;
+				}, (response) => {
+					console.log('opps Is Error: ' + response);
+				});
+			},
+			// 添加点赞
+			upVote() {
+				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}&ACTION="good"`;  // 当前景点点赞数
+				this.$http.get(url).then((response) => {
+					this.$data.goodCount = response.data.GOODED_COUNT;
+					this.$data.isActive = true;
+				}, (response) => {
+					console.log('opps Is Error: ' + response);
+				});
 			}
 		}
 	}	
@@ -73,6 +152,7 @@
 		left: 0;
 		right: 0;
 		height: 60px;
+		z-index: 100;
 		background: #F6F6F6;
 		ul  {
 			padding: 0 5%;
@@ -93,6 +173,141 @@
 					color: #e60012;
 					width: 13%;
 					margin-right: 0;
+				}
+			}
+		}
+		.active {
+			color: #e60012;
+			pointer-events: none;
+		}
+	}
+	.reviews-box {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 200;
+		width: 100%;
+		height: 100px;
+		padding: 2% 8% 5%; 
+		background: #F6F6F6;
+		box-sizing: border-box;
+		.header {
+			width: 100%;
+			padding-bottom: 5px;
+			text-align: center;
+			span {
+				color: #000;
+				&:first-child {
+					float: left;
+				}
+				&:last-child {
+					float: right;
+					color: #333;
+					pointer-events: none;
+					&.active {
+						pointer-events: auto;
+						color: #e60012;
+					}
+				}
+			}
+		}
+		.body {
+			textarea {
+				min-height: 40px;
+				width: 100%;
+				padding: 2%;
+				font-size: 14px;
+				border-radius: 5%;
+				border: 2px solid #F6F6F6;
+				background: #fff;
+				box-sizing: border-box;
+				resize: none;
+				box-shadow: none;
+			}
+		}
+	}
+	.slide-fade-down-enter-active, .slide-fade-down-leave-active  {
+		transition: all 1s ease-in;
+	}
+	.slide-fade-down-enter, .slide-fade-down-leave-to{
+		transform: translate3d(0, 100px, 0);
+	}
+
+	.slide-fade-right-enter-active, .slide-fade-right-leave-active  {
+		transition: all 1s ease-in;
+	}
+	.slide-fade-right-enter, .slide-fade-right-leave-to{
+		transform: translate3d(120px, 0, 0);
+	}
+	
+	.comment-box {
+		position: fixed;
+		top: 40px;
+		bottom: 50px;
+		right: 0;
+		width: 80%;
+		overflow-y: auto;
+		background: #F6F6F6;
+		.mask {
+			position: fixed;
+			display: block;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background: tranpsarent;
+			z-index: 10;
+		}
+		.comment-main {
+			position: relative;
+			z-index: 100;
+			section {
+				height: 80px;
+				background: #fff;
+				margin-bottom: 20px;
+				overflow: hidden;
+				text-align: left;
+				border-radius: 2%;
+				box-shadow: 0 0 5px 0 rgba(0, 0, 0, .6);
+				.reviews-author {
+					float: left;
+					width: 25%;
+					height: 80px;
+					line-height: 80px;
+					padding-left: 4%;
+					margin-right: 2%;
+					font-size: 14px;
+					color: #333;
+					box-sizing: border-box;
+					span {
+						display: inline-block;
+						width: 40x;
+						height: 40px;
+						line-height: 40px;
+						border-radius: 50%;
+						border: 1px solid #e6e6e6;
+						box-shadow: 0 0 3px 0 rgba(0, 0, 0, .8);
+					}
+				}
+				.reviews-body {
+					height: 80px;
+					padding: 2%;
+					overflow: hidden;
+					font-size: 14px;
+					p {
+						height: 30px;
+						&:first-child span {
+							color: #e60012;
+						}
+						&:last-child {
+							font-size: 12px;
+							text-align: right;
+						}
+					}
+				}
+				&:last-of-type {
+					margin-bottom: 30px;
 				}
 			}
 		}
