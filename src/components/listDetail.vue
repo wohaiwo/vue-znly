@@ -7,9 +7,9 @@
                 你的浏览器不支持 <code>audio</code> 音频播放功能.
             </audio>
         </div>
-        <div class="detail-body" v-show="isShow">
+        <div class="detail-body"  :class="{service:this.identifier != 1}" v-show="isShow">
             <section v-html="listDetail.content"></section>
-            <review :id="detailId"></review>
+            <review :id="detailId" v-show="needReview"></review>
         </div>
         <loading :show="done"></loading>
     </div>
@@ -24,6 +24,7 @@
           return {
             done: false,
             isShow: false,     // 只有当数据加载完成之后才能够实现出来
+            needReview:false,  //是否需要显示评论(只有景点才需要,其他的地方都是不需要的,默认关闭)
             detailId: '',
             identifier: '',    // 标识符 景点介绍模块为1 旅行百宝箱模块为0
             listDetail: {      // 详情列表信息
@@ -64,10 +65,12 @@
                         this.listDetail.title = data[0].SS_TITLE;
                         this.listDetail.content = data[0].SS_CONTENT;
                         this.listDetail.audio = data[0].SS_VIDEO_URL;
+                        this.needReview=true;
                     } else {
-                        // 旅行百宝箱
+                        // 资讯
                         this.listDetail.title = data[0].INFO_TITLE;
                         this.listDetail.content = data[0].INFO_CONTENT;
+                        this.needReview=false;
                     }
                 }, (response) => {
                     console.log('opps Is Error: ' + response);
@@ -87,7 +90,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
   .detail {
     text-align: left;
     .goback  {
@@ -104,18 +107,26 @@
     .audio-play {
         width: 100%;
         color: #fff;
-        padding: 2% 4%;
+        padding: 1% 4%;
         margin-top: 40px;
         text-align: right;
         background: #000;
         opacity: .4;
         box-sizing: border-box;
     }
-    .detail-body {
-        width: 90%;
-        padding: 10px;
-        margin: 0 auto 40px;
+    .service{
+         margin-top:45px;
     }
-  }
-</style>
+    .detail-body {
+     
+        padding: 10px;
+       
+        section{
+            width:100%;
+             img{width:100%;}
+        }
+    }
 
+  }
+ 
+</style>

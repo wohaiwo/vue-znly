@@ -3,13 +3,15 @@
 		<div class="list-tpl">
 			<ul class="list-item">
 				<li v-for="item in items">
-					<router-link  :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
-						<img :src="item.imageUrl">
-					</router-link>
-					<aside>
-						<h3>{{ item.title }}</h3>
-						<article>{{  item.description }}</article>
-					</aside>
+			    	<router-link    :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
+						<div class="list-image"  :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
+							<img :src="item.imageUrl">
+						</div>
+						<aside >
+							<h3>{{ item.title }}</h3>
+							<article>{{  item.description }}</article>
+						</aside>
+	                </router-link>
 				</li>
 			</ul>
 	    </div>
@@ -36,7 +38,7 @@
 		.list-item {
 			margin: 10px auto;
 			list-style: none;
-			height: 100vh;
+			height: 100%;
 			background: #EDEDED;	
 			li {
 				display: inline-block;

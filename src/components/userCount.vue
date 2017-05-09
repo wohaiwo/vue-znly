@@ -1,6 +1,6 @@
  <template>
 	<div>
-		<p>景区当前游客数: <span>209</span>人， 预计今日游客总人数: <span>2817</span>人</p>
+		<p>{{ msg }}</p>
 		 
 	</div>
 </template>
@@ -38,9 +38,9 @@
 			left: 100%;
 			position: absolute;
 			white-space: nowrap;
-			animation-delay: .5s;
+			animation-delay: 1s;
 			animation-name: slide;
-			animation-duration: 8s;
+			animation-duration: 60s;
 			animation-iteration-count: infinite;
 		}
 	}
