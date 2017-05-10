@@ -15,6 +15,7 @@ Vue.prototype.$http = axios
 // 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({ 
 	mode: 'history',
+	base: '/H5/',
 	routes
 });
 

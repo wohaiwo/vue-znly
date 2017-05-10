@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-header goBack="true" :headTitle="headTitle"></v-header>
-        <list-tpl :items="serviceInfo"  identifier="2"></list-tpl>
+        <list-tpl :items="serviceInfo" :type="this.type"  identifier="2"></list-tpl>
         <loading :show="done"></loading>
     </div>
 </template>
@@ -10,7 +10,6 @@
     import vHeader from '../components/header.vue';
     import listTpl from '../components/listTpl.vue';
     import loading from '../components/loading.vue'; 
-      
     export default {
         data() {
             return {
@@ -32,7 +31,7 @@
                         type = '餐饮、住宿';
                         break;
                     case '13':
-                        type = '门票';
+                        type = '预订门票';
                         break;
                     case '14':
                         type = '特色商品';
