@@ -70,7 +70,7 @@
 		filters: {
 			time: function(date) {
 				if(!date) return '';
-			    var date = new Date(date);//如果date为10位不需要乘1000
+			    var date = new Date(date);
 			    var Y = date.getFullYear() + '-';
 			    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
 			    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
@@ -79,7 +79,7 @@
 		},
 		methods: {
 			showRate(rate) {
-				if(!rate) rate = 5; 
+				if(!rate) rate = 5;
 				return "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate);
 			},
 			// 判断是否显示评论界面
@@ -132,7 +132,7 @@
 			},
 			// 添加点赞
 			upVote() {
-				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}&ACTION="good"`;  // 当前景点点赞数
+				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}&ACTION="good"`;  // 当前景点-点赞数
 				this.$http.get(url).then((response) => {
 					this.$data.goodCount = response.data.GOODED_COUNT;
 					this.$data.isActive = true;
