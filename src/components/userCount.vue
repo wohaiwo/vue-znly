@@ -25,6 +25,7 @@
 
 <style scoped lang="scss">
 	div {
+		position: relative;
 		width: 100%;
 		height:  20px;
 		padding: 0 4%;
@@ -33,10 +34,13 @@
 		color: #ddd;
 		background: rgba(0, 0, 0, .4);
 		overflow: hidden;
+		z-index: 40;
+		user-select: none;
 		box-sizing: border-box;
 		p {
 			left: 100%;
 			position: absolute;
+			z-index: 40;
 			white-space: nowrap;
 			animation-delay: 1s;
 			animation-name: slide;

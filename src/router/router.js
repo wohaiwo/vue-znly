@@ -11,12 +11,13 @@ const service = resolve => require(['../page/service.vue'], resolve);
 // 定义路由
 const routes = [
 	{
-		path: '/',
+		path: '/H5',
 		component: App,
 		children: [
 			{
-				path: '',
-				redirect: '/home'
+				path: '/',
+				name: 'home', 
+				component: home
 			},
 			{
 				path: '/home',
@@ -25,9 +26,9 @@ const routes = [
 			}, {
 				path: '/scenic/introduction', 
 				name: 'introduction', 
-				component: introduction 
+				component: introduction
 			}, {
-				path: '/scenic/detail/:id/:identifier', 
+				path: '/scenic/detail/:id/:type/:identifier', 
 				name: 'listDetail', 
 				component: listDetail
 			}, {
@@ -44,9 +45,6 @@ const routes = [
 				component: service
 			}
 		]
-	}, {
-		path: '*', 
-		component: App
 	}
 ]
 

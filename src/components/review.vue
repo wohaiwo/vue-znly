@@ -1,32 +1,39 @@
 <template>
-	<div class="reviews" v-show="isShow">
-		<h4>热门评论</h4>
-		<section v-for="(item, index) in reviewData">
-			<div class="reviews-header">
-				<span class="reviews-author">{{ item.SSR_NAME }}</span>
-				评分:&nbsp;<span class="reviews-rate">{{ showRate(item.SSR_POINT) }}</span>
-				<span>{{ item.ENTRY_DATE_TIME }}</span></div>
-			<div class="reviews-body">
-				<p>{{ item.SSR_CONTENT }}</p>
-			</div>
-		</section>
-		<div  v-show="isShowReviewBox" class="addReviewBox">
-			<div class="mask"></div>
-			<div class="tipBox">
-				<header class="tipBox-title">
-					<h2>新增评论<span><i class="iconfont">&#xe646;</i></span></h2>
-				</header>
-				<div class="tipBox-content">
-					<input type="text">
+	<div>
+		<div class="reviews" v-show="isShow">
+			<ul>
+				<li><i class="iconfont">&#xe60a;</i>{{ visitCount }}</li>
+				<li @click="upVote" :class="{active: isActive }"><i class="iconfont">&#xe644;</i>{{ goodCount }}</li>
+				<li @click="showReviewBox"><i class="iconfont">&#xe761;</i>写评论</li>
+				<li @click="showCommentBox"><i class="iconfont">&#xe649;</i>{{ reviewCount }}</li>
+			</ul>
+		</div>
+		<transition name="slide-fade-down">
+			<div v-show="isShowReviewBox" class="reviews-box">
+				<div class="header">
+					<span @click="closeReviewBox">取消</span>
+					<span>评论</span>
+					<span @click="addReview" :class="isSend">发送</span>
 				</div>
-				<footer>
-					<a v-on:click="closeReviewBox">取消</a>
-					<a href="">提交</a>
-				</footer>
+				<div class="body">
+					<textarea v-model="reviewContent" autofocus maxlength="120"  required></textarea>
+				</div>
+			</div>
+		</transition>
+		<transition name="slide-fade-right">
+		<div v-show="isShowCommentBox" class="comment-box">
+			<div @click="closeCommentBox" class="mask"></div>
+			<div class="comment-main">
+				<section v-for="(item, index) in reviewData">
+					<div class="reviews-author"><span>游客{{ index + 1 }}</span></div>
+					<div class="reviews-body">
+						<p class="reviews-content">{{ item.SSR_CONTENT }}</p>
+						<p>{{ item.ENTRY_DATE_TIME  | time}}</p>
+					</div>
+				</section>
 			</div>
 		</div>
-		<a v-on:click="showReviewBox">新增</a>
-		<a v-if="isGetReviewBtn" v-on:click="getMoreReview">查看更多评论</a>
+		</transition>
 	</div>
 </template>
 
@@ -34,53 +41,102 @@
 	export default {
 		data() {
 			return {
-				isShow: true,
-				isShowReviewBox: false,
-				SS_NO: this.id,
-				isGetReviewBtn: true,		// 控制查看更多评论按钮只能出现一次
-				reviewData: [],
-				moreReviewData: []
+				isShow: true,				
+				SS_NO: this.id,				// 当前的景点id
+				isActive: false,
+				reviewData: [],   			// 评论数
+				visitCount: 0,    			// 访问数
+				goodCount: 0,	  			// 点赞数
+				reviewCount: 0,   			// 评论数
+				reviewContent: '', 			// 评论内容
+				isShowReviewBox: false,		// 是否显示评论框
+				isShowCommentBox: false     // 是否显示评论列表
 			}
 		},
 		props: ['id'],
 		mounted() {
 			this.initPage();
 		},
+		computed: {
+			isSend: function () {
+				return {
+					active:	!!this.$data.reviewContent.length
+				}   
+			}
+		},
+		filters: {
+			time: function(date) {
+				if(!date) return '';
+			    var date = new Date(date);
+			    var Y = date.getFullYear() + '-';
+			    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+			    	return Y + M + D;
+			}
+		},
 		methods: {
 			showRate(rate) {
-				if(!rate) rate = 5; 
+				if(!rate) rate = 5;
 				return "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate);
 			},
+			// 判断是否显示评论界面
 			showReviewBox() {
 				this.$data.isShowReviewBox = !this.$data.isShowReviewBox;
 			},
+			showCommentBox() {
+				if(this.reviewCount == 0) return false;     // 如果当前的评论数为0 则不显示评论列表
+				this.$data.isShowCommentBox = !this.$data.isShowCommentBox;
+			},
+			// 关闭评论界面
 			closeReviewBox() {
 				this.$data.isShowReviewBox = false;
 			},
+			closeCommentBox() {
+				this.$data.isShowCommentBox = false;
+			},
+			// 添加评论
 			addReview() {
-				let url = `/zhan/saveSsr`;
+				let url = `/zhan/saveSSR`;
 				this.$http.post(url, {
-					SSR_NO: "",
 					SS_NO: this.$data.SS_NO,
-					SSR_CONTENT: "是19日杭州飞高雄，然后垦丁，花莲，九份，台北5月30日出。有同行"
+					SSR_CONTENT: this.$data.reviewContent
 				}).then( (response) => {
-					console.log('输出结果' + response);
+					this.closeReviewBox();
+					this.reviewContent = '';
 				}, (response) => {
 					console.log('opps Is Error: ' + response);
 				})
-			},
-			getMoreReview() {
-				this.$data.reviewData = this.$data.reviewData.concat(this.$data.moreReviewData);
-				this.$data.isGetReviewBtn = false;
 			},
 			initPage() {
-				let url = `/zhan/querySRList?id=${this.$data.SS_NO}`;
+				let url = `/zhan/querySSRList?id=${this.$data.SS_NO}`;
 				this.$http.get(url).then((response) => {
-					this.$data.reviewData = response.data.rows.slice(0, 2);
-					this.$data.moreReviewData = response.data.rows.slice(2);
+					this.$data.reviewData = response.data.rows;
 				}, (response) => {
 					console.log('opps Is Error: ' + response);
-				})
+				});
+				this.getUserVisit();	// 获取评论接口中 访问量和点赞数
+			},
+			// 获取当前景点的页面访问量点赞数以及评论数
+			getUserVisit() {
+				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}`;  // 游客访问量
+				this.$http.get(url).then((response) => {
+					this.$data.goodCount = response.data.GOODED_COUNT;
+					this.$data.visitCount = response.data.LOOKED_COUNT;
+					this.$data.isActive = response.data.IS_GOODED;
+					this.$data.reviewCount = response.data.REVIEW_COUNT;
+				}, (response) => {
+					console.log('opps Is Error: ' + response);
+				});
+			},
+			// 添加点赞
+			upVote() {
+				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}&ACTION="good"`;  // 当前景点-点赞数
+				this.$http.get(url).then((response) => {
+					this.$data.goodCount = response.data.GOODED_COUNT;
+					this.$data.isActive = true;
+				}, (response) => {
+					console.log('opps Is Error: ' + response);
+				});
 			}
 		}
 	}	
@@ -89,86 +145,154 @@
 
 <style scoped lang="scss">
 	.reviews {
-		text-align: center;
-		h4 {
-			margin: 10px 0;
-			padding: 8px 12px;
-			text-align: left;
-		}
-		section {
-			background: #fff;
-			margin-bottom: 10px;
-			overflow: hidden;
-			text-align: left;
-			border-radius: 2%;
-			box-shadow: 0 0 5px 0 rgba(0, 0, 0, .6);
-			.reviews-header {
-				display: block;
-				font-size: 14px;
-				padding: 1% 2%;
-				height: 20px;
-				width: 100%;
-				overflow: hidden;
-				.reviews-author, .reviews-rate {
-					color: #ff9900;
-					margin-right:  5%;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 60px;
+		z-index: 100;
+		background: #F6F6F6;
+		ul  {
+			padding: 0 5%;
+			li {
+				display: inline-block;
+				width: 25%;
+				height: 30px;
+				line-height: 30px;
+				margin: 15px 4% 0 0;
+				text-align: center;
+				border-radius: 10%;
+				background: #fff;
+				box-sizing: border-box;
+				i {
+					margin-right: 5px;
+				}
+				&:last-child {
+					color: #e60012;
+					width: 13%;
+					margin-right: 0;
 				}
 			}
-			.reviews-body {
-				padding: 4px 2%;
-				overflow: hidden;
-				font-size: 14px;
-			}
-			&:last-of-type {
-				margin-bottom: 30px;
-			}
 		}
-		a {	
-			display: inline-block;
-			width: 120px;
-			height: 40px;
-			line-height: 40px;
-			color: #f90;
-			border: 1px solid #f90;
-			border-radius: 10px;
-			&:first-of-type {
-				margin-right: 10px;
-			}
+		.active {
+			color: #e60012;
+			pointer-events: none;
 		}
-		.addReviewBox {
-			position: relative;
-			.mask {
-				position: fixed;
-				display: block;
-				left: 0;
-				right: 0;
-				top: 0;
-				bottom: 0;
-				background: rgba(0, 0, 0, .4);
-				z-index: 1;
-			}
-			.tipBox {
-				position: fixed;
-				top: 50%;
-				left: 50%;
-				width: 80%;
-				height: 200px;
-				border-radius: 4%;
-				background: #fff;
-				transform: translate3d(-50%, -50%, 0);
-				z-index: 100;
-				.tipBox-title {
-					padding: 2% 4%;
-					text-align: left;
-					span {
-						float: right;
+	}
+	.reviews-box {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 200;
+		width: 100%;
+		height: 100px;
+		padding: 2% 8% 5%; 
+		background: #F6F6F6;
+		box-sizing: border-box;
+		.header {
+			width: 100%;
+			padding-bottom: 5px;
+			text-align: center;
+			span {
+				color: #000;
+				&:first-child {
+					float: left;
+				}
+				&:last-child {
+					float: right;
+					color: #333;
+					pointer-events: none;
+					&.active {
+						pointer-events: auto;
+						color: #e60012;
 					}
 				}
-				.tipBox-content {
+			}
+		}
+		.body {
+			textarea {
+				min-height: 40px;
+				width: 100%;
+				padding: 2%;
+				font-size: 14px;
+				border-radius: 5%;
+				border: 2px solid #F6F6F6;
+				background: #fff;
+				box-sizing: border-box;
+				resize: none;
+				box-shadow: none;
+			}
+		}
+	}
+	.slide-fade-down-enter-active, .slide-fade-down-leave-active  {
+		transition: all 1s ease-in;
+	}
+	.slide-fade-down-enter, .slide-fade-down-leave-to{
+		transform: translate3d(0, 100px, 0);
+	}
 
+	.slide-fade-right-enter-active, .slide-fade-right-leave-active  {
+		transition: all 1s ease-in;
+	}
+	.slide-fade-right-enter, .slide-fade-right-leave-to{
+		transform: translate3d(100%, 0, 0);
+	}
+	
+	.comment-box {
+		position: fixed;
+		top: 40px;
+		bottom: 50px;
+		right: 0;
+		width: 80%;
+		overflow-y: auto;
+		background: #F6F6F6;
+		.mask {
+			position: fixed;
+			display: block;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, .5);
+			z-index: 100;
+		}
+		.comment-main {
+			position: relative;
+			z-index: 100;
+			section {
+				min-height: 80px;
+				padding: 2%;
+				background: #fff;
+				overflow: hidden;
+				text-align: left;
+				border-bottom: 2px solid #F6F6F6;
+				box-sizing: border-box;
+				.reviews-author {
+					float: left;
+					width: 25%;
+					height: 80px;
+					padding-left: 4%;
+					margin-right: 2%;
+					font-size: 14px;
+					color: #333;
+					box-sizing: border-box;
 				}
-				footer {
-
+				.reviews-body {
+					min-height: 80px;
+					font-size: 14px;
+					overflow: hidden;
+					.reviews-content {
+						min-height: 40px;
+					}
+					p {
+						&:first-child span {
+							color: #e60012;
+						}
+						&:last-child {
+							font-size: 12px;
+						}
+					}
 				}
 			}
 		}

@@ -13,7 +13,7 @@
 	    	</li>
 	    	<li>
 	    		<router-link :to="{name: 'service', params: {type: 6}}" :class=" pathName == navUrl[2] ? 'active' : ''">
-	    			<i class="iconfont">&#xe621;</i><span>餐饮住宿</span>
+	    			<i class="iconfont">&#xe7f1;</i><span>餐饮住宿</span>
 	    		</router-link>
 	    	</li>
 	    </ul>

@@ -8,8 +8,8 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),      // 编译输入的 index.html 文件
     assetsRoot: path.resolve(__dirname, '../dist'),            // 编译输出的静态资源路径
     assetsSubDirectory: 'static',           // 编译输出的二级目录
-    assetsPublicPath: './',              // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
-
+    assetsPublicPath: '/H5/',             // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
+    
     productionSourceMap: false,          // 是否开启 cssSourceMap
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -25,7 +25,8 @@ module.exports = {
     assetsPublicPath: '/',           // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
     proxyTable: {
         '/zhan': {
-            target: 'http://192.168.110.94:8080/JSY/h5/', 
+            // target: 'http://192.168.110.160:8080/JSY/h5/', 
+            target: 'http://192.168.109.160:8080/JSY_H5/h5/',
             // target: 'http://192.168.110.71:8080/JSY/h5/',
             changeOrigin: true,
             pathRewrite: {

@@ -4,7 +4,7 @@
 			<ul class="list-item">
 				<li v-for="item in items">
 			    	<router-link :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
-						<div class="list-image"  :to="{name: 'listDetail', params: {id: item.id, identifier: identifier}}">
+						<div class="list-image"  :to="{name: 'listDetail', params: {id: item.id, type: type, identifier: identifier}}">
 							<img :src="item.imageUrl">
 						</div>
 						<aside >
@@ -28,6 +28,9 @@
 			items: {
 				type: Array,
 				default: []
+			},
+			type: {
+				type: String
 			}
 		}
 	}		
@@ -38,7 +41,8 @@
 		.list-item {
 			margin: 10px auto;
 			list-style: none;
-			height: 100%;
+			height: 100vh;
+			overflow: auto;
 			background: #EDEDED;	
 			li {
 				display: inline-block;
