@@ -1,21 +1,15 @@
 <template>
     <div id="main">
         <v-header sideBar="true">
-        <span slot="logo">今世缘景区欢迎您</span>
+        <span slot="logo"><img class="logo" src="../assets/image/logo.png" alt="logo">今世缘景区欢迎您</span>
         </v-header>
         <user-count></user-count>
         <!-- 首页滚动banner -->
         <div class="banner">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                       <img src="../assets/image/bg2.jpg" alt="center-bg">
-                    </div>
-                    <div class="swiper-slide">
-                       <img src="../assets/image/bg3.jpg" alt="right-bg">
-                    </div>
-                    <div class="swiper-slide">
-                       <img src="../assets/image/bg1.jpg" alt="left-bg">
+                    <div class="swiper-slide" v-for="item in imageDataArr">
+                       <img :src="item.INFO_IMAGE_URL" :alt="item.INFO_TITLE">
                     </div>
                 </div>
                 <!-- 如果需要分页器 -->
@@ -31,6 +25,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import vHeader from '../components/header'
 import userCount from '../components/userCount'
 import vFooter from '../components/footer.vue'
@@ -40,18 +35,31 @@ import '../static/lib/css/swiper.min.css'
 export default {
     data() {
         return {
-
+            imageDataArr: []
         }
     },
     components: {
         vHeader, userCount,  vFooter
     },
     mounted() {
-        //初始化swiper
-        new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            loop: true
-        });
+        this.initPage();
+    },
+    methods: {
+        initPage() {
+              let url = `/zhan/queryServiceList?type=1`;
+            this.$http.get(url).then((response) => {
+                this.imageDataArr = response.data.rows;
+                Vue.nextTick(function() {
+                    new Swiper('.swiper-container', {
+                        autoplay: 2000, 
+                        pagination: '.swiper-pagination',
+                        loop: true
+                    });
+                });
+            }, (response) => {
+                console.log('oops, data is not found');                
+            });
+        }
     }
 }
 </script>
@@ -64,10 +72,19 @@ export default {
         text-align: center;
         color: #2c3e50;
     }
+    .logo {
+        width: 25px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
     .banner {
         .swiper-container {
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 40px;
+            bottom: 50px;
+            z-index: 10;
             .swiper-slide img {
                 width: 100%;
                 height: 100%;
