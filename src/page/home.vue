@@ -16,7 +16,7 @@
                 <div class="swiper-pagination"></div>
             </div>
             <nav class="right-side">
-                <a href="">预订门票</a>
+                <router-link :to="{name: 'service', params: {type: 13}}">预订门票</router-link>
                 <a href="">虚拟旅游</a>
             </nav>
         </div>
@@ -35,18 +35,28 @@ import '../static/lib/css/swiper.min.css'
 export default {
     data() {
         return {
+            isApp: false,
             imageDataArr: []
         }
     },
     components: {
         vHeader, userCount,  vFooter
     },
+    created() {
+        this.isApp = this.$route.query && this.$route.query.app;
+        // 浏览器本地存储是否是一体机
+        if(window.localStorage) {
+            localStorage.setItem('isApp', this.isApp);
+        } else {
+            Cookie.wirte('isApp', this.isApp);
+        }
+    },
     mounted() {
         this.initPage();
     },
     methods: {
         initPage() {
-              let url = `/zhan/queryServiceList?type=1`;
+              let url = `/JSY_H5/h5/queryServiceList?type=1`;
             this.$http.get(url).then((response) => {
                 this.imageDataArr = response.data.rows;
                 Vue.nextTick(function() {

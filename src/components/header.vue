@@ -15,7 +15,7 @@
 	    <router-link :to="{name: 'service', params: {type: 13}}"><i class="iconfont">&#xe6b2;</i>预订门票</router-link>
         <router-link :to="{name: 'service', params: {type: 14}}"><i class="iconfont">&#xe6af;</i>特色购物</router-link>
     	<router-link to="/travelBox"><i class="iconfont">&#xe603;</i>旅行百宝箱</router-link>
-    		<a href=""><i class="iconfont">&#xe73d;</i>虚拟游览</a>
+    		<a href=""><i class="iconfont">&#xe73d;</i>虚拟旅游</a>
     		 <router-link :to="{name: 'service', params: {type: 6}}"><i class="iconfont">&#xe7f1;</i>餐饮住宿</router-link>
         </nav>
         </transition>
@@ -99,7 +99,7 @@
 		}
 	}
 	.slide-fade-enter-active, .slide-fade-leave-active  {
-		transition: all 1s ease-in;
+		transition: all 0.3s ease-in;
 	}
 	.slide-fade-enter, .slide-fade-leave-to{
 		opacity: 0;

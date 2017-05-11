@@ -50,7 +50,9 @@
 				height: 100vh;
 				background: #F5F5F5;
 			section {
-				padding-top: 1%;
+				.iconfont {
+					margin-top: 10px;
+				}
 				a {
 					display: inline-block;
 					width: 32%;
