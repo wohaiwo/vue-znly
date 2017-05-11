@@ -6,16 +6,18 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import routes from './router/router.js';
 import axios from 'axios';
+import FastClick from 'FastClick';
 
 Vue.use(VueRouter);		// 加载vue-router插件
 Vue.use(Vuex);			// 加载vuex插件
 Vue.prototype.$http = axios
 
+FastClick.attach(document.body);
+
 
 // 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({ 
-	mode: 'history',
-	base: '/H5/',
+	mode: 'hash',
 	routes
 });
 

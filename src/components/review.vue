@@ -3,7 +3,7 @@
 		<div class="reviews" v-show="isShow">
 			<ul>
 				<li><i class="iconfont">&#xe60a;</i>{{ visitCount }}</li>
-				<li @click="upVote" :class="{active: isActive }"><i class="iconfont">&#xe644;</i>{{ goodCount }}</li>
+				<li @click.once="upVote" :class="{active: isActive }"><i class="iconfont">&#xe644;</i>{{ goodCount }}</li>
 				<li @click="showReviewBox"><i class="iconfont">&#xe761;</i>写评论</li>
 				<li @click="showCommentBox"><i class="iconfont">&#xe649;</i>{{ reviewCount }}</li>
 			</ul>
@@ -16,13 +16,13 @@
 					<span @click="addReview" :class="isSend">发送</span>
 				</div>
 				<div class="body">
-					<textarea v-model="reviewContent" autofocus maxlength="120"  required></textarea>
+					<textarea v-model="reviewContent" autofocus maxlength="120" required></textarea>
 				</div>
 			</div>
 		</transition>
 		<transition name="slide-fade-right">
 		<div v-show="isShowCommentBox" class="comment-box">
-			<div @click="closeCommentBox" class="mask"></div>
+			<div @click.stop.prevent="closeCommentBox" class="mask"></div>
 			<div class="comment-main">
 				<section v-for="(item, index) in reviewData">
 					<div class="reviews-author"><span>游客{{ index + 1 }}</span></div>
@@ -34,10 +34,13 @@
 			</div>
 		</div>
 		</transition>
+	    <div v-if="isShowQrBox" id="qrcode" @click="closeQrcodeBox"></div>
 	</div>
 </template>
 
 <script>
+	import Vue from 'vue';
+	import '../static/lib/js/jquery.qrcode.min.js'
 	export default {
 		data() {
 			return {
@@ -50,10 +53,11 @@
 				reviewCount: 0,   			// 评论数
 				reviewContent: '', 			// 评论内容
 				isShowReviewBox: false,		// 是否显示评论框
-				isShowCommentBox: false     // 是否显示评论列表
+				isShowCommentBox: false,     // 是否显示评论列表
+				isShowQrBox: false          // 是否显示二维码
 			}
 		},
-		props: ['id'],
+		props: ['id', 'qrCodeUrl'],
 		mounted() {
 			this.initPage();
 		},
@@ -65,6 +69,7 @@
 			}
 		},
 		filters: {
+			// 格式化时间
 			time: function(date) {
 				if(!date) return '';
 			    var date = new Date(date);
@@ -75,13 +80,25 @@
 			}
 		},
 		methods: {
+			// 评分
 			showRate(rate) {
 				if(!rate) rate = 5;
 				return "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate);
 			},
 			// 判断是否显示评论界面
 			showReviewBox() {
-				this.$data.isShowReviewBox = !this.$data.isShowReviewBox;
+				let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
+				if(isApp == 'true') {
+					let url = this.qrCodeUrl;
+					this.$data.isShowReviewBox = false;
+					this.isShowQrBox = true;
+					jQuery('#qrcode').empty();
+					Vue.nextTick(function() {
+						jQuery('#qrcode').qrcode(url);			// 使用ES6来进行字符串转义
+					});
+				} else {
+					this.$data.isShowReviewBox = !this.$data.isShowReviewBox;
+				}
 			},
 			showCommentBox() {
 				if(this.reviewCount == 0) return false;     // 如果当前的评论数为0 则不显示评论列表
@@ -96,7 +113,7 @@
 			},
 			// 添加评论
 			addReview() {
-				let url = `/zhan/saveSSR`;
+				let url = `/JSY_H5/h5/saveSSR`;
 				this.$http.post(url, {
 					SS_NO: this.$data.SS_NO,
 					SSR_CONTENT: this.$data.reviewContent
@@ -108,7 +125,7 @@
 				})
 			},
 			initPage() {
-				let url = `/zhan/querySSRList?id=${this.$data.SS_NO}`;
+				let url = `/JSY_H5/h5/querySSRList?id=${this.$data.SS_NO}`;
 				this.$http.get(url).then((response) => {
 					this.$data.reviewData = response.data.rows;
 				}, (response) => {
@@ -118,7 +135,7 @@
 			},
 			// 获取当前景点的页面访问量点赞数以及评论数
 			getUserVisit() {
-				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}`;  // 游客访问量
+				let url = `/JSY_H5/h5/addInteractive?id=${this.$data.SS_NO}`;  // 游客访问量
 				this.$http.get(url).then((response) => {
 					this.$data.goodCount = response.data.GOODED_COUNT;
 					this.$data.visitCount = response.data.LOOKED_COUNT;
@@ -130,13 +147,17 @@
 			},
 			// 添加点赞
 			upVote() {
-				let url = `/zhan/addInteractive?id=${this.$data.SS_NO}&ACTION="good"`;  // 当前景点-点赞数
+				let url = `/JSY_H5/h5/addInteractive?id=${this.$data.SS_NO}&ACTION="good"`;  // 当前景点-点赞数
 				this.$http.get(url).then((response) => {
 					this.$data.goodCount = response.data.GOODED_COUNT;
 					this.$data.isActive = true;
 				}, (response) => {
 					console.log('opps Is Error: ' + response);
 				});
+			},
+			// 关闭二维码框
+			closeQrcodeBox() {
+				this.isShowQrBox = false;
 			}
 		}
 	}	
@@ -296,5 +317,19 @@
 				}
 			}
 		}
+	}
+	#qrcode {
+		position: absolute;
+		width: 300px;
+		height: 340px;
+		left: 50%;
+		top: 50%;
+		z-index: 100;
+		text-align: center;
+		padding-top: 50px;
+		background: #fff;
+		border: 1px solid #ddd;
+		transform: translate3d(-50%, -50%, 0);
+		box-sizing: border-box;
 	}
 </style>

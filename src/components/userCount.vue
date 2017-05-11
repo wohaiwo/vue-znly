@@ -13,7 +13,7 @@
 			}
 		},
 		created() {
-			let url = '/zhan/statistics';
+			let url = '/JSY_H5/h5/statistics';
 			this.$http.get(url).then((response) => {
 				this.$data.msg = response.data.data.msg;
 			}, (response) => {

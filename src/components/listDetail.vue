@@ -9,7 +9,7 @@
         </div>
         <div class="detail-body"  :class="{service:this.identifier != 1}" v-show="isShow">
             <section v-html="listDetail.content"></section>
-            <review :id="detailId" v-show="needReview"></review>
+            <review :id="detailId" :qrCodeUrl="qrCodeUrl" v-show="needReview"></review>
         </div>
         <footer v-if="isShowShop"><a :href="shopUrl" target="_blank">去预订</a></footer>
         <loading :show="done"></loading>
@@ -31,6 +31,7 @@
             identifier: '',    // 标识符 景点介绍模块为1 旅行百宝箱模块为0
             isShowShop: false,  // 是否显示购物按钮，只有在去购物下面才能显示出来,
             shopUrl: '',
+            qrCodeUrl: '',      // 二维码的生成地址
             listDetail: {      // 详情列表信息
                 title: '',
                 content: '',
@@ -53,12 +54,12 @@
             initPage() {
                 let listDetailUrl = '';
                 this.$data.done = true;
-                if(this.identifier == 1) {      
-                    listDetailUrl = `/zhan/querySSSOne?id=${this.detailId}`;   // 景点介绍调用的接口
+                if(this.identifier == 1) {  
+                    listDetailUrl = `/JSY_H5/h5/querySSSOne?id=${this.detailId}`;   // 景点介绍调用的接口
                 } else if(this.identifier == 2) {
-                    listDetailUrl = `/zhan/queryServiceOne?id=${this.detailId}`;   // 外部交通，周边景点调用接口
+                    listDetailUrl = `/JSY_H5/h5/queryServiceOne?id=${this.detailId}`;   // 外部交通，周边景点调用接口
                 } else {
-                    listDetailUrl = `/zhan/queryServiceList?type=${this.detailId}`;     // 景点地图调用的接口
+                    listDetailUrl = `/JSY_H5/h5/queryServiceList?type=${this.detailId}`;     // 旅游线路，景区地图调用的接口
                 }
 
                 this.$http.get(listDetailUrl).then((response) => {
@@ -70,6 +71,7 @@
                         this.listDetail.title = data[0].SS_TITLE;
                         this.listDetail.content = data[0].SS_CONTENT;
                         this.listDetail.audio = data[0].SS_VIDEO_URL;
+                        this.qrCodeUrl = data[0].QR_CORE_URL;
                         this.needReview = true;
                     } else {
                         // 资讯
