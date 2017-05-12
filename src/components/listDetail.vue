@@ -9,7 +9,7 @@
         </div>
         <div class="detail-body"  :class="{service:this.identifier != 1}" v-show="isShow">
             <section v-html="listDetail.content"></section>
-            <review :id="detailId" :qrCodeUrl="qrCodeUrl" v-show="needReview"></review>
+            <review :id="detailId" :qrCodeUrl="qrCodeUrl" v-if="needReview"></review>
         </div>
         <footer v-if="isShowShop"><a :href="shopUrl" target="_blank">去预订</a></footer>
         <loading :show="done"></loading>
@@ -57,7 +57,7 @@
                 if(this.identifier == 1) {  
                     listDetailUrl = `/JSY_H5/h5/querySSSOne?id=${this.detailId}`;   // 景点介绍调用的接口
                 } else if(this.identifier == 2) {
-                    listDetailUrl = `/JSY_H5/h5/queryServiceOne?id=${this.detailId}`;   // 外部交通，周边景点调用接口
+                    listDetailUrl = `/JSY_H5/h5/queryServiceOne?id=${this.detailId}`;   // service.vue下面过来调用接口
                 } else {
                     listDetailUrl = `/JSY_H5/h5/queryServiceList?type=${this.detailId}`;     // 旅游线路，景区地图调用的接口
                 }
@@ -78,7 +78,7 @@
                         this.listDetail.title = data[0].INFO_TITLE;
                         this.listDetail.content = data[0].INFO_CONTENT;
                         this.needReview = false;
-                        // 特色商品跳转过来并且购物地址存在时，才显示出来
+                        // 预定门票和特色商品跳转过来并且购物地址存在时，才显示出来
                         if(this.type == 13 || this.type == 14) {
                             if( data[0].JUMP_URL) {
                                 this.isShowShop = true;
@@ -103,7 +103,6 @@
                 //   audio.play();
                 //   this.done = true;
                 // }
-                    debugger;
                     if(audio!==null){
                         if(!audio.paused)
                         {
@@ -121,18 +120,6 @@
 
 <style lang="scss">
   .detail {
-    text-align: left;
-    .goback  {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        height: 50px;
-        color: rgb(35, 132, 232);
-        background: #efefef;
-        text-align: left;
-        padding-left: 20px;
-        margin-bottom:  10px;
-    }
     .audio-play {
         width: 100%;
         color: #fff;
@@ -149,15 +136,15 @@
             line-height: 30px;
         }
     }
-    .service{
-         margin-top:45px;
-    }
     .detail-body {
         padding: 10px;
-        section{
+        section {
             width:100%;
-             img{width:100%;}
+            img{width:100%;}
         }
+    }
+    .service {
+        margin-top: 40px;
     }
     footer {
         position: absolute;
@@ -180,4 +167,23 @@
         }
     }
   }
+  @media screen and (min-width: 1000px) {
+    .detail {
+        .audio-play {
+            margin-top: 100px;
+            i {
+                font-size: 32px;
+                width: 200px;
+                height: 50px;
+                line-height: 50px;
+            }
+        }
+        .service {
+            margin-top: 100px;
+        }
+        footer {
+            height: 100px;
+        }
+    }
+}
 </style>
