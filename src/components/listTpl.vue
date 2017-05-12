@@ -36,27 +36,14 @@
 	export default {
 		data() {
 			return {
-				isApp: false,
+				isApp: false,				// 判断是否使用不同的遍历模块， true => 调出二维码模板
 				isShowQrBox: false
 			}
 		},
-		props: {
-			identifier: {
-				type: String,
-				default: '0'     // 景点介绍 default => 1 旅行百宝箱 default => 0
-			},
-			items: {
-				type: Array,
-				default: []
-			},
-			type: {
-				type: String
-			}
-		},
+		props: ['identifier', 'items', 'type'],
 		created() {
-	        if(this.identifier == 1) {
-	        	this.isApp = false;
-	        } else {
+			// 在listTpl页面中 只在预订门票和特色购物里面调出而二维码
+	        if(this.type == 13 || this.type == 14){
 		        let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
 		        if(isApp == 'true') {
 		        	this.isApp = true;

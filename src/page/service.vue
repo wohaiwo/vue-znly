@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-header goBack="true" :headTitle="headTitle"></v-header>
-        <list-tpl :items="serviceInfo" type="this.type"  identifier="2"></list-tpl>
+        <list-tpl :items="serviceInfo" :type="this.type"  identifier="2"></list-tpl>
         <loading :show="done"></loading>
     </div>
 </template>

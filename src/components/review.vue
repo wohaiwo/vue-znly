@@ -88,7 +88,7 @@
 			// 判断是否显示评论界面
 			showReviewBox() {
 				let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
-				if(isApp == 'true') {
+				if(isApp == 'true') {			// 如果当前是一体机访问 则无法添加评论 调出二维码
 					let url = this.qrCodeUrl;
 					this.$data.isShowReviewBox = false;
 					this.isShowQrBox = true;
