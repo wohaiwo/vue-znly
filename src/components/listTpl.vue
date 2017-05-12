@@ -3,7 +3,7 @@
 		<div class="list-tpl" >
 			<ul v-if="!isApp" class="list-item">
 				<li v-for="item in items">
-			    	<router-link :to="{name: 'listDetail', params: {id: item.id, type: 1, identifier: identifier}}">
+			    	<router-link :to="{name: 'listDetail', params: {id: item.id, type: type, identifier: identifier}}">
 						<div class="list-image">
 							<img :src="item.imageUrl">
 						</div>
@@ -22,6 +22,7 @@
 					<aside >
 						<h3>{{ item.title }}</h3>
 						<article>{{ item.description }}</article>
+						<a :href="shopUrl" target="_blank">去预订</a>
 					</aside>
 				</li>
 			</ul>
@@ -74,7 +75,7 @@
 			height: 100vh;
 			overflow: auto;
 			background: #EDEDED;	
-			li {
+			li a {
 				display: inline-block;
 				width: 100%;
 				padding: 2%;
@@ -129,5 +130,22 @@
 		border: 1px solid #ddd;
 		transform: translate3d(-50%, -50%, 0);
 		box-sizing: border-box;
+	}
+	@media screen and (min-width: 1000px) {
+		.list-tpl {
+			margin-top: 100px;
+			.list-item {
+				li a {
+					aside {
+						h3 {
+							font-size: 38px;
+						}
+						article {
+							font-size: 32px;
+						}
+					}
+				}
+			}
+		}
 	}
 </style>

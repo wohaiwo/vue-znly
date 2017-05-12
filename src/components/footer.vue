@@ -50,17 +50,22 @@
 		bottom: 0;
 		z-index: 100;
 		color: #000;
-		background: #fff;				
-		ul > li {
-			display: inline-block;
-			position: relative;
-			float: left;
-			width: 33.33%;
-			box-sizing: border-box;
-			.iconfont {
-				display: block;
-				margin-top: 4px;
-				font-size: 20px;
+		background: #fff;			
+		ul {
+			height: 100%;
+			overflow: hidden;
+			li {
+				display: inline-block;
+				position: relative;
+				float: left;
+				width: 33.33%;
+				height: 100%;
+				box-sizing: border-box;
+				.iconfont {
+					display: block;
+					margin-top: 4px;
+					font-size: 20px;
+				}
 			}
 		}
 		// 菜单栏选中点击样式
@@ -77,16 +82,32 @@
 			color: #5D656B;
 			text-align: center;
 		}
-		.slide-fade-enter-active {
-		  transition: all .3s ease;
+	}
+
+	.slide-fade-enter-active {
+	  transition: all .3s ease;
+	}
+	.slide-fade-leave-active {
+	  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+	}
+	.slide-fade-enter, .slide-fade-leave-to {
+	  transform: translate3d(0, 100%, 0);
+	  opacity: 0;
+	}
+
+	@media screen and  (min-width: 1000px) {
+		footer {
+			height: 100px;
+			ul {
+				li {
+					.iconfont {
+						font-size: 48px;
+					}
+				}
+			}
+			a {
+				font-size: 24px;
+			}
 		}
-		.slide-fade-leave-active {
-		  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-		}
-		.slide-fade-enter, .slide-fade-leave-to {
-		  transform: translate3d(0, 100%, 0);
-		  opacity: 0;
-		}
-	
 	}
 </style>

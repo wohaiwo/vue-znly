@@ -38,4 +38,12 @@
 		width: 100%;
 		height: 400px;
 	}
+	@media screen and (min-width: 1000px) {
+		.travel-box {
+			margin-top: 100px;
+		}
+		#allmap {
+			height: 600px;
+		}
+	}
 </style>

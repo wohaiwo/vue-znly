@@ -88,6 +88,7 @@ export default {
         vertical-align: middle;
     }
     .banner {
+        $right-side-size: 50px;
         .swiper-container {
             position: fixed;
             left: 0;
@@ -105,11 +106,11 @@ export default {
             right: 4%;
             bottom: 70px;
             z-index: 10;
-            width: 50px;
+            width: $right-side-size;
             a {
                 display: inline-block;
-                width: 50px;
-                height: 50px;
+                width: $right-side-size;
+                height: $right-side-size;
                 padding: 3px;
                 color: #fff;
                 background: #e60012;
@@ -123,5 +124,39 @@ export default {
                 }
             }
         }
+    }
+
+    // 适配一体机样式
+    @media screen and  (min-width: 1000px) {
+        $right-side-size: 150px;
+        .logo {
+            width: 48px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .banner {
+            .swiper-container {
+                top: 100px;
+                bottom: 100px;
+            }
+             .right-side {
+                position: fixed;
+                right: 4%;
+                bottom: $right-side-size;
+                width: $right-side-size;
+                a {
+                    display: inline-block;
+                    width: $right-side-size;
+                    height: $right-side-size;
+                    font-size: 45px;
+                    padding: 5px;
+                    border: 5px solid #fff;
+                    &:not(:last-child) {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+
     }
 </style>

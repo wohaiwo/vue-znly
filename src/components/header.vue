@@ -20,7 +20,6 @@
         </nav>
         </transition>
 	</header>
-	
 </template>
 <script>
 	export default {
@@ -44,7 +43,6 @@
 		width: 100%;
 		height: 40px;
 		line-height: 40px;
-		
 		color: $nav-color;
 		background: #fff ;
 		text-align: center;
@@ -56,8 +54,9 @@
 		}		
 		.left-icon {
 			position: absolute;
-			left: 4%;
+			left: 0;
 			top: 50%;
+			width: 50px;
 			transform: translateY(-50%);
 			i {
 				color: $nav-color;
@@ -105,5 +104,35 @@
 		opacity: 0;
 		transform: translate3d(-150px, 0, 0);
 	}
+	// 适配一体机样式
+	@media screen and  (min-width: 1000px) {
+		$header-height: 100px;
+	 	i {
+	 		font-size: 36px;
+	 	}
+	  	header {
+			font-size: 32px;
+		  	height: $header-height;
+		  	line-height: $header-height;
+		  	border-bottom: 4px solid #ededed;
+			span {
+				font-size: 45px;
+				font-weight: bold;	
+			}
+			.left-icon {
+				width: $header-height;
+			}
+		  	nav {
+				top: $header-height;
+				bottom:　$header-height;
+				width: 300px;
+		  		a {
+					height: $header-height;
+					line-height: $header-height;
+					border-bottom: 3px solid #e6e6e6;
+				}
+		  	}
+	  }
 
+	}
 </style>
