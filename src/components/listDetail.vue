@@ -1,9 +1,9 @@
 <template>
     <div class="detail">
         <v-header goBack="true" :headTitle="listDetail.title"></v-header>
-        <div class="audio-play" v-if="this.identifier == 1">
-            <i v-on:click="playAudio" class="iconfont">&#xe66b;</i>&nbsp;音频播放
-            <audio id="audio" loop="loop" :src="listDetail.audio">
+        <div class="audio-play" v-if="this.identifier == 1 && listDetail.audio">
+            <i v-on:click="playAudio" class="iconfont">&#xe66b;&nbsp;音频播放</i>
+            <audio  id="audio" :src="listDetail.audio">
                 你的浏览器不支持 <code>audio</code> 音频播放功能.
             </audio>
         </div>
@@ -94,13 +94,27 @@
             },
             playAudio() {
                 let audio = document.getElementById('audio');
-                var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
-                    && audio.readyState > 2;
+                // var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
+                //     && audio.readyState > 2;
 
-                if (!isPlaying) {
-                  audio.play();
+                // if (!isPlaying) {
+                //     debugger;
+                //   audio.load(); 
+                //   audio.play();
+                //   this.done = true;
+                // }
+                    debugger;
+                    if(audio!==null){
+                        if(!audio.paused)
+                        {
+                            audio.pause();
+                        }else{
+                            audio.load();
+                            audio.play();
+                            this.done = true;
+                        }
+                    }
                 }
-            }
         }
     }
 </script>
@@ -128,6 +142,12 @@
         background: #000;
         opacity: .4;
         box-sizing: border-box;
+        i {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+        }
     }
     .service{
          margin-top:45px;
