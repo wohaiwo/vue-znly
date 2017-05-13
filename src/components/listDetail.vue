@@ -85,7 +85,11 @@
                                 this.shopUrl = data[0].JUMP_URL;
                             }
                         }
-
+                    }
+                    // 由于后台传过来是一段字符串 需要使用正则来适配一体机文字大小
+                    let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
+                    if(isApp == 'true') {
+                        this.listDetail.content = this.listDetail.content.replace(/font-size:\s*\d+px;/g, 'font-size: 24px;');
                     }
                 }, (response) => {
                     console.log('opps Is Error: ' + response);

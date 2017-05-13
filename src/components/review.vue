@@ -2,7 +2,7 @@
 	<div>
 		<div class="reviews" v-show="isShow">
 			<ul>
-				<li><i class="iconfont">&#xe60a;</i>{{ visitCount }}</li>
+				<li><i class="iconfont">&#xe73d;</i>{{ visitCount }}</li>
 				<li @click.once="upVote" :class="{active: isActive }"><i class="iconfont">&#xe644;</i>{{ goodCount }}</li>
 				<li @click="showReviewBox"><i class="iconfont">&#xe761;</i>写评论</li>
 				<li @click="showCommentBox"><i class="iconfont">&#xe649;</i>{{ reviewCount }}</li>
