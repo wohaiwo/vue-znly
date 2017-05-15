@@ -98,26 +98,14 @@
             },
             playAudio() {
                 let audio = document.getElementById('audio');
-                // var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
-                //     && audio.readyState > 2;
+                var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
+                    && audio.readyState > 2;
 
-                // if (!isPlaying) {
-                //     debugger;
-                //   audio.load(); 
-                //   audio.play();
-                //   this.done = true;
-                // }
-                    if(audio!==null){
-                        if(!audio.paused)
-                        {
-                            audio.pause();
-                        }else{
-                            audio.load();
-                            audio.play();
-                            this.done = true;
-                        }
-                    }
+                if (!isPlaying) {
+                  audio.load(); 
+                  audio.play();
                 }
+            }
         }
     }
 </script>
@@ -141,10 +129,12 @@
         }
     }
     .detail-body {
-        padding: 10px;
+        padding: 10px 10px 40px 10px ;
         section {
             width:100%;
-            img{width:100%;}
+            img {
+                width:100%;
+            }
         }
     }
     .service {

@@ -28,7 +28,7 @@ const routes = [
 				name: 'introduction', 
 				component: introduction
 			}, {
-				path: 'scenic/detail/:id/:type/:identifier', 
+				path: 'scenic/detail/:id/:type/:identifier',
 				name: 'listDetail', 
 				component: listDetail
 			}, {
