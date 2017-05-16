@@ -67,6 +67,7 @@
                     	tmp['imageUrl'] = item['INFO_IMAGE_URL'];
                     	tmp['title'] = item['INFO_TITLE'];
                         tmp['qrCode'] = item['QR_CORE_URL'];
+                        tmp['jumpUrl'] = item['JUMP_URL'];
                     	this.$data.serviceInfo.push(tmp);
                     });
                     this.$data.done = false;
