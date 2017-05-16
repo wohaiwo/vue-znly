@@ -287,6 +287,7 @@
 				background: #fff;
 				overflow: hidden;
 				text-align: left;
+				font-size: 14px;
 				border-bottom: 2px solid #F6F6F6;
 				box-sizing: border-box;
 				.reviews-author {
@@ -295,13 +296,11 @@
 					height: 80px;
 					padding-left: 4%;
 					margin-right: 2%;
-					font-size: 14px;
 					color: #333;
 					box-sizing: border-box;
 				}
 				.reviews-body {
 					min-height: 80px;
-					font-size: 14px;
 					overflow: hidden;
 					.reviews-content {
 						min-height: 40px;
@@ -312,6 +311,24 @@
 						}
 						&:last-child {
 							font-size: 12px;
+						}
+					}
+				}
+			}
+		}
+	}
+	@media screen and  (min-width: 1000px) {
+		.comment-box {
+			top: 100px;
+			bottom: 60px;
+			.comment-main {
+				section {
+					font-size: 32px;
+					.reviews-body {
+						p {
+							&:last-child {
+								font-size: 24px;
+							}
 						}
 					}
 				}

@@ -3,7 +3,7 @@
         <v-header goBack="true" :headTitle="listDetail.title"></v-header>
         <div class="audio-play" v-if="this.identifier == 1 && listDetail.audio">
             <i v-on:click="playAudio" class="iconfont">&#xe66b;&nbsp;音频播放</i>
-            <audio  id="audio" :src="listDetail.audio">
+            <audio  id="audio" :src="listDetail.audio" loop="true">
                 你的浏览器不支持 <code>audio</code> 音频播放功能.
             </audio>
         </div>
@@ -112,11 +112,11 @@
 
 <style lang="scss">
   .detail {
+    padding-top: 40px;  // 移除头部header的高度
     .audio-play {
         width: 100%;
         color: #fff;
         padding: 1% 4%;
-        margin-top: 40px;
         text-align: right;
         background: #000;
         opacity: .4;
@@ -163,8 +163,8 @@
   }
   @media screen and (min-width: 1000px) {
     .detail {
+        padding-top: 100px;
         .audio-play {
-            margin-top: 100px;
             i {
                 font-size: 32px;
                 width: 200px;

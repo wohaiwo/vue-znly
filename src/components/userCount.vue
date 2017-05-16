@@ -48,6 +48,16 @@
 			animation-iteration-count: infinite;
 		}
 	}
+	@media screen and (min-width: 1000px) {
+		div{
+			height:  60px;
+			margin-top: 100px;
+			font-size: 32px;
+			p {
+				line-height: 60px;
+			}
+		}
+	}
 	@keyframes slide {
 		0% { left: 100%; }
 		100% { left: -120%; }
