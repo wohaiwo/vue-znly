@@ -7,6 +7,7 @@ const listDetail = resolve => require(['../components/listDetail.vue'], resolve)
 const travelBox = resolve => require(['../page/travelBox.vue'], resolve);
 const externalMap = resolve => require(['../page/externalMap.vue'], resolve);
 const service = resolve => require(['../page/service.vue'], resolve);
+const dropBox = resolve => require(['../components/dropBox.vue'], resolve);
 
 // 定义路由
 const routes = [
@@ -16,33 +17,36 @@ const routes = [
 		children: [
 			{
 				path: '/',
-				name: 'home',
-				component: home
+				redirect: { name: 'home' }
 			},
 			{
-				path: 'home',
+				path: '/home',
 				name: 'home',
 				component: home
 			}, {
-				path: 'scenic/introduction', 
+				path: '/scenic/introduction', 
 				name: 'introduction', 
 				component: introduction
 			}, {
-				path: 'scenic/detail/:id/:type/:identifier',
+				path: '/scenic/detail/:id/:type/:identifier',
 				name: 'listDetail', 
 				component: listDetail
 			}, {
-				path: 'travelBox',
+				path: '/travelBox',
 				name: 'travelBox', 
 				component: travelBox
 			}, {
-				path: 'externalMap',
+				path: '/externalMap',
 				name: 'externalMap',
 				component: externalMap
 			}, {
-				path: 'service/:type',
+				path: '/service/:type',
 				name: 'service',
 				component: service
+			}, {
+				path: '/dropBox/:url/:title',
+				name: 'dropBox',
+				component: dropBox
 			}
 		]
 	}

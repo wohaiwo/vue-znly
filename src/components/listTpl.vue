@@ -39,7 +39,6 @@
 <script>
 	import Vue from 'vue';
 	import '../static/lib/js/jquery.qrcode.min.js';
-	import dropBox from './dropBox.vue';
 	export default {
 		data() {
 			return {
@@ -59,9 +58,6 @@
 					this.isApp = true;
 				}
 	        }
-		},
-		compontents: {
-			dropBox
 		},
 		methods: {
 			showQRCode(url) {
@@ -205,3 +201,5 @@
 		}
 	}
 </style>
+
+/#/?app=true
