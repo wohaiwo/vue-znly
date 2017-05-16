@@ -7,11 +7,10 @@
                 你的浏览器不支持 <code>audio</code> 音频播放功能.
             </audio>
         </div>
-        <div class="detail-body"  :class="{service:this.identifier != 1}" v-show="isShow">
+        <div class="detail-body" v-show="isShow">
             <section v-html="listDetail.content"></section>
             <review :id="detailId" :qrCodeUrl="qrCodeUrl" v-if="needReview"></review>
         </div>
-        <footer v-if="isShowShop"><a :href="shopUrl" target="_blank">去预订</a></footer>
         <loading :show="done"></loading>
     </div>
 </template>
@@ -29,7 +28,6 @@
             detailId: '',
             type: '',          // 判断当前的模块信息
             identifier: '',    // 标识符 景点介绍模块为1 旅行百宝箱模块为0
-            isShowShop: false,  // 是否显示购物按钮，只有在去购物下面才能显示出来,
             shopUrl: '',
             qrCodeUrl: '',      // 二维码的生成地址
             listDetail: {      // 详情列表信息
@@ -78,13 +76,6 @@
                         this.listDetail.title = data[0].INFO_TITLE;
                         this.listDetail.content = data[0].INFO_CONTENT;
                         this.needReview = false;
-                        // 预定门票和特色商品跳转过来并且购物地址存在时，才显示出来
-                        if(this.type == 13 || this.type == 14) {
-                            if( data[0].JUMP_URL) {
-                                this.isShowShop = true;
-                                this.shopUrl = data[0].JUMP_URL;
-                            }
-                        }
                     }
                     // 由于后台传过来是一段字符串 需要使用正则来适配一体机文字大小
                     let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
@@ -137,9 +128,6 @@
             }
         }
     }
-    .service {
-        margin-top: 40px;
-    }
     footer {
         position: absolute;
         right: 0;
@@ -171,9 +159,6 @@
                 height: 50px;
                 line-height: 50px;
             }
-        }
-        .service {
-            margin-top: 100px;
         }
         footer {
             height: 100px;

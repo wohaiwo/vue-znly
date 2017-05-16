@@ -34,7 +34,10 @@
 			</div>
 		</div>
 		</transition>
-	    <div v-if="isShowQrBox" id="qrcode" @click="closeQrcodeBox"></div>
+	    <div v-if="isShowQrBox" id="qrcode" @click="closeQrcodeBox">
+	    	<div class="mask"></div>
+	    	<div id="qrcode-content"></div>
+	    </div>
 	</div>
 </template>
 
@@ -92,9 +95,9 @@
 					let url = this.qrCodeUrl;
 					this.$data.isShowReviewBox = false;
 					this.isShowQrBox = true;
-					jQuery('#qrcode').empty();
+					jQuery('#qrcode #qrcode-content').empty();
 					Vue.nextTick(function() {
-						jQuery('#qrcode').qrcode(url);			// 使用ES6来进行字符串转义
+						jQuery('#qrcode #qrcode-content').qrcode(url);			// 使用ES6来进行字符串转义
 					});
 				} else {
 					this.$data.isShowReviewBox = !this.$data.isShowReviewBox;
@@ -336,17 +339,32 @@
 		}
 	}
 	#qrcode {
-		position: absolute;
-		width: 300px;
-		height: 340px;
-		left: 50%;
-		top: 50%;
-		z-index: 100;
-		text-align: center;
-		padding-top: 50px;
-		background: #fff;
-		border: 1px solid #ddd;
-		transform: translate3d(-50%, -50%, 0);
-		box-sizing: border-box;
+		position: relative;
+		.mask {
+			position: fixed;
+			display: block;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.4);
+			z-index: 10;
+		}
+		#qrcode-content {
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			padding: 15px;
+			text-align: center;
+			background: #fff;
+			z-index: 100;
+			transform: translate3d(-50%, -50%, 0);
+			&:after {
+				content: '扫一扫上面的二维码图案';
+				display: block;
+				padding-top: 10px;
+
+			}
+		}
 	}
 </style>
