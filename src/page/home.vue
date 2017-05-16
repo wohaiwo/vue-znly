@@ -61,7 +61,7 @@ export default {
                 this.imageDataArr = response.data.rows;
                 Vue.nextTick(function() {
                     new Swiper('.swiper-container', {
-                        autoplay: 2000, 
+                        autoplay: 5000, 
                         pagination: '.swiper-pagination',
                         loop: true
                     });
