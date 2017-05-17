@@ -38,6 +38,9 @@
 	    	<div class="mask"></div>
 	    	<div id="qrcode-content"></div>
 	    </div>
+	    <div v-if="isShowTipBox" class="tip-box">
+	    	您的评论已经提交，请等待审核通过...
+	    </div>
 	</div>
 </template>
 
@@ -57,7 +60,8 @@
 				reviewContent: '', 			// 评论内容
 				isShowReviewBox: false,		// 是否显示评论框
 				isShowCommentBox: false,     // 是否显示评论列表
-				isShowQrBox: false          // 是否显示二维码
+				isShowQrBox: false,          // 是否显示二维码
+				isShowTipBox: false			  // 是否显示评论成功提示框
 			}
 		},
 		props: ['id', 'qrCodeUrl'],
@@ -123,6 +127,11 @@
 				}).then( (response) => {
 					this.closeReviewBox();
 					this.reviewContent = '';
+					this.isShowTipBox = true;
+					// 需要使用箭头函数来邦定this的值
+					setTimeout(() => {
+						this.isShowTipBox = false;
+					}, 1000);
 				}, (response) => {
 					console.log('opps Is Error: ' + response);
 				})
@@ -168,6 +177,7 @@
 
 
 <style scoped lang="scss">
+	/* 底部详情操作框 */
 	.reviews {
 		position: fixed;
 		bottom: 0;
@@ -198,11 +208,13 @@
 				}
 			}
 		}
+		/* 选中样式 */
 		.active {
 			color: #e60012;
 			pointer-events: none;
 		}
 	}
+	/* 评论框基本样式 */
 	.reviews-box {
 		position: fixed;
 		left: 0;
@@ -234,6 +246,7 @@
 				}
 			}
 		}
+		/* 用户编辑框 */
 		.body {
 			textarea {
 				min-height: 40px;
@@ -249,6 +262,7 @@
 			}
 		}
 	}
+	/* 动画效果 */
 	.slide-fade-down-enter-active, .slide-fade-down-leave-active  {
 		transition: all 1s ease-in;
 	}
@@ -262,7 +276,21 @@
 	.slide-fade-right-enter, .slide-fade-right-leave-to{
 		transform: translate3d(100%, 0, 0);
 	}
-	
+	.tip-box {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate3d(-50%, -50%, 0);
+		width: 200px;
+		height: 100px;
+		font-size: 18px;
+		text-align: justify;
+		padding: 10px 20px;
+		background: #fff;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
+		box-sizing: border-box;
+	}
+	/* 右侧评论列表 */
 	.comment-box {
 		position: fixed;
 		top: 40px;
