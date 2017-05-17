@@ -6,7 +6,7 @@
         <user-count></user-count>
         <!-- 首页滚动banner -->
         <div class="banner">
-            <div class="swiper-container">
+            <div class="swiper-container" @click="showSideBar">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="item in imageDataArr">
                        <img :src="item.INFO_IMAGE_URL" :alt="item.INFO_TITLE">
@@ -21,7 +21,7 @@
                 <a @click="showSideBar">更多</a>
             </nav>
         </div>
-        <v-footer></v-footer>
+        <v-footer :pathName="1"></v-footer>
     </div>
 </template>
 
@@ -68,7 +68,7 @@ export default {
                 this.imageDataArr = response.data.rows;
                 Vue.nextTick(function() {
                     new Swiper('.swiper-container', {
-                        autoplay: 5000, 
+                        autoplay: 10000, 
                         pagination: '.swiper-pagination',
                         loop: true
                     });
@@ -78,13 +78,13 @@ export default {
             });
         },
         getVRTravel() {
-            let url = '/JSY_H5/h5/queryServiceList?type=13';
+            let url = '/JSY_H5/h5/queryServiceList?type=16';
             this.$http.get(url).then((response) => {
                 // 遍历数据，改变数据结构，套用同一天模板listTpl
                 this.$data.vRinfo['title'] = response.data.rows[0]['INFO_TITLE'];
                 this.$data.vRinfo['jumpUrl'] = response.data.rows[0]['JUMP_URL'];
             });
-        },
+        },  
         showSideBar() {
             this.isShowSideBar = !this.isShowSideBar;
         }

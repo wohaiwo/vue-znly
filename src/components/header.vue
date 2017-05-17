@@ -12,6 +12,7 @@
         <nav v-show="isShowSideBar">
 	    	<router-link to="/scenic/introduction"><i class="iconfont">&#xe641;</i>景区介绍</router-link>
 			<router-link :to="{name: 'service', params: {type: 3}}"><i class="iconfont">&#xe64c;</i>景区公告</router-link>
+			<router-link :to="{name: 'service', params: {type: 15}}"><i class="iconfont">&#xe69b;</i>景区服务</router-link>
 		    <router-link :to="{name: 'service', params: {type: 13}}"><i class="iconfont">&#xe6b2;</i>预订门票</router-link>
 	        <router-link :to="{name: 'service', params: {type: 14}}"><i class="iconfont">&#xe6af;</i>特色购物</router-link>
 	    	<router-link to="/travelBox"><i class="iconfont">&#xe603;</i>旅行百宝箱</router-link>

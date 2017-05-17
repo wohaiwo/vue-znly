@@ -24,5 +24,10 @@ const router = new VueRouter({
 // 创建和挂载根实例	
 var vm =  new Vue({
 	router,
-	components: { App }
+	components: { App },
+	beforeRouteUpdate(to, from, next) {
+		console.log(to);
+		console.log(from);
+		next();
+	}
 }).$mount('#app')
