@@ -1,7 +1,7 @@
 <template>
     <div id="main">
-        <v-header sideBar="true" :isShowSideBar="isShowSideBar" @breadcrumb="showSideBar">
-        <span slot="logo"><img class="logo" src="../assets/image/logo.png" alt="logo">今世缘景区欢迎您</span>
+        <v-header sideBar="true" :isShowSideBar="isShowSideBar" :vrUrl="vRinfo.jumpUrl" :vrTitle="vRinfo.title" @breadcrumb="showSideBar">
+            <span slot="logo"><img class="logo" src="../assets/image/logo.png" alt="logo">今世缘景区欢迎您</span>
         </v-header>
         <user-count></user-count>
         <!-- 首页滚动banner -->
@@ -18,7 +18,7 @@
             <nav class="right-side">
                 <router-link :to="{name: 'service', params: {type: 13}}">预订门票</router-link>
                 <router-link :to="{name: 'dropBox', params: {url: vRinfo.jumpUrl, title: vRinfo.title}}">虚拟旅游</router-link>
-                <a @click="showSideBar">更多</a>
+                <a @click="showSideBar">更多功能</a>
             </nav>
         </div>
         <v-footer :pathName="1"></v-footer>
@@ -137,10 +137,6 @@ export default {
                 border-radius: 50%;
                 box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
                 box-sizing: border-box;
-                &:last-child {
-                    padding: 0;
-                    line-height: $right-side-size;
-                }
                 &:not(:last-child) {
                     margin-bottom: 10px;
                 }
@@ -171,10 +167,6 @@ export default {
                     font-size: 45px;
                     padding: 5px;
                     border: 5px solid #fff;
-                    &:last-child {
-                        line-height: $right-side-size;
-                    }
-                   
                 }
             }
         }

@@ -16,7 +16,7 @@
 		    <router-link :to="{name: 'service', params: {type: 13}}"><i class="iconfont">&#xe6b2;</i>预订门票</router-link>
 	        <router-link :to="{name: 'service', params: {type: 14}}"><i class="iconfont">&#xe6af;</i>特色购物</router-link>
 	    	<router-link to="/travelBox"><i class="iconfont">&#xe603;</i>旅行百宝箱</router-link>
-    		<a href=""><i class="iconfont">&#xe73d;</i>虚拟旅游</a>
+    		<router-link :to="{name: 'dropBox', params: {url: vrUrl, title: vrTitle}}"><i class="iconfont">&#xe73d;</i>虚拟旅游</router-link>
     		 <router-link :to="{name: 'service', params: {type: 6}}"><i class="iconfont">&#xe7f1;</i>餐饮住宿</router-link>
         </nav>
         </transition>
@@ -28,7 +28,7 @@
 			return {
 			}
 		},
-		props: ['goBack', 'headTitle', 'sideBar', 'isShowSideBar'],
+		props: ['goBack', 'headTitle', 'sideBar', 'isShowSideBar', 'vrUrl', 'vrTitle'],
 		methods: {
 			showSideBar() {
 				this.$emit('breadcrumb');
