@@ -81,7 +81,6 @@ export default {
             let url = '/JSY_H5/h5/queryServiceList?type=13';
             this.$http.get(url).then((response) => {
                 // 遍历数据，改变数据结构，套用同一天模板listTpl
-                debugger;
                 this.$data.vRinfo['title'] = response.data.rows[0]['INFO_TITLE'];
                 this.$data.vRinfo['jumpUrl'] = response.data.rows[0]['JUMP_URL'];
             });
