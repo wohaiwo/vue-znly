@@ -25,7 +25,7 @@
 			<div @click.stop.prevent="closeCommentBox" class="mask"></div>
 			<div class="comment-main">
 				<section v-for="(item, index) in reviewData">
-					<div class="reviews-author"><span>游客{{ index + 1 }}</span></div>
+					<div class="reviews-author"><span>游客</span></div>
 					<div class="reviews-body">
 						<p class="reviews-content">{{ item.SSR_CONTENT }}</p>
 						<p>{{ item.ENTRY_DATE_TIME  | time}}</p>

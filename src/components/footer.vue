@@ -26,11 +26,11 @@
 			return {
 				isShow: false,
 				pathName : 'home',
-				navUrl : ['scenic', 'home', 'travelBox']
+				navUrl : ['/service/15', '/home', '/service/6']
 			}
 		},
 		created() {
-			this.pathName = this.$route.name;
+			this.pathName = this.$route.path;
 		},
 		methods: {
 			showNav(state) {

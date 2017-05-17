@@ -1,6 +1,6 @@
 <template>
     <div id="main">
-        <v-header sideBar="true">
+        <v-header sideBar="true" :isShowSideBar="isShowSideBar" @breadcrumb="showSideBar">
         <span slot="logo"><img class="logo" src="../assets/image/logo.png" alt="logo">今世缘景区欢迎您</span>
         </v-header>
         <user-count></user-count>
@@ -17,7 +17,8 @@
             </div>
             <nav class="right-side">
                 <router-link :to="{name: 'service', params: {type: 13}}">预订门票</router-link>
-                <a href="">虚拟旅游</a>
+                <router-link :to="{name: 'dropBox', params: {url: vRinfo.jumpUrl, title: vRinfo.title}}">虚拟旅游</router-link>
+                <a @click="showSideBar">更多</a>
             </nav>
         </div>
         <v-footer></v-footer>
@@ -35,8 +36,13 @@ import '../static/lib/css/swiper.min.css'
 export default {
     data() {
         return {
-            isApp: false,
-            imageDataArr: []
+            isApp: false,           // 是否是园区一体机
+            isShowSideBar: false,
+            imageDataArr: [],       // 首页轮播图
+            vRinfo: {
+                title: '',
+                jumpUrl: ''
+            }              // 虚拟旅游
         }
     },
     components: {
@@ -53,6 +59,7 @@ export default {
     },
     mounted() {
         this.initPage();
+        this.getVRTravel();
     },
     methods: {
         initPage() {
@@ -69,6 +76,18 @@ export default {
             }, (response) => {
                 console.log('oops, data is not found');                
             });
+        },
+        getVRTravel() {
+            let url = '/JSY_H5/h5/queryServiceList?type=13';
+            this.$http.get(url).then((response) => {
+                // 遍历数据，改变数据结构，套用同一天模板listTpl
+                debugger;
+                this.$data.vRinfo['title'] = response.data.rows[0]['INFO_TITLE'];
+                this.$data.vRinfo['jumpUrl'] = response.data.rows[0]['JUMP_URL'];
+            });
+        },
+        showSideBar() {
+            this.isShowSideBar = !this.isShowSideBar;
         }
     }
 }
@@ -119,6 +138,10 @@ export default {
                 border-radius: 50%;
                 box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
                 box-sizing: border-box;
+                &:last-child {
+                    padding: 0;
+                    line-height: $right-side-size;
+                }
                 &:not(:last-child) {
                     margin-bottom: 10px;
                 }
@@ -140,20 +163,19 @@ export default {
                 bottom: 100px;
             }
              .right-side {
-                position: fixed;
                 right: 4%;
                 bottom: $right-side-size;
                 width: $right-side-size;
                 a {
-                    display: inline-block;
                     width: $right-side-size;
                     height: $right-side-size;
                     font-size: 45px;
                     padding: 5px;
                     border: 5px solid #fff;
-                    &:not(:last-child) {
-                        margin-bottom: 10px;
+                    &:last-child {
+                        line-height: $right-side-size;
                     }
+                   
                 }
             }
         }
