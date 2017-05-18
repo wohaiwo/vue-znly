@@ -114,6 +114,7 @@ export default {
             top: 40px;
             bottom: 50px;
             z-index: 10;
+            overflow: hidden;
             .swiper-slide img {
                 width: 100%;
                 height: 100%;
