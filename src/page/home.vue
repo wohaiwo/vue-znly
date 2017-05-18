@@ -50,6 +50,9 @@ export default {
         vHeader, userCount,  vFooter
     },
     created() {
+
+    },
+    mounted() {
         let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
         // 浏览器本地存储是否是一体机
         // 判断本地缓存里面是否已经存在isApp
@@ -70,11 +73,9 @@ export default {
                 this.logoImgUrl = '../static/logo/logo-red-h5.png';
             }
         }
-
-    },
-    mounted() {
         this.initPage();
         this.getVRTravel();
+
     },
     methods: {
         initPage() {
@@ -153,7 +154,6 @@ export default {
                 display: inline-block;
                 width: $right-side-size;
                 height: $right-side-size;
-                font-size: 0;
                 color: #fff;
                 background: #e60012;
                 border: 2px solid #fff;
@@ -164,9 +164,8 @@ export default {
                 span {
                     display: block;
                     font-size: 14px;
-                    &:last-child {
-                        margin-top: -3px;
-                    }
+                    height: 18px;
+                    line-height: 18px;
                 }
                 &:not(:last-child) {
                     margin-bottom: 10px;
@@ -198,9 +197,8 @@ export default {
                     border: 5px solid #fff;
                     span {
                         font-size: 45px;
-                        &:last-child {
-                            margin-top: -10px;
-                        }
+                        height: 55px;
+                        line-height: 55px;
                     }
                 }
             }

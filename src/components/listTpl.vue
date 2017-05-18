@@ -9,7 +9,7 @@
 						</div>
 						<aside >
 							<h3>{{ item.title }}</h3>
-							<article>{{  item.description }}</article>
+							<article>{{ item.description }}</article>
 						</aside>
 	                </router-link>
 				</li>
@@ -22,7 +22,7 @@
 					</div>
 					<aside >
 						<h3>{{ item.title }}</h3>
-						<article>{{ item.description }}</article>
+						<article v-html= "item.description"></article>
 						<router-link class="jump-url" v-if="!isApp" :to="{name: 'dropBox', params: {url: item.jumpUrl, title: item.title}}">去预订</router-link>
 						<a class="jump-url" v-if="isApp" @click="showQRCode(item.qrCode)">去预订</a>
 					</aside>
