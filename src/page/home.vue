@@ -1,12 +1,12 @@
 <template>
     <div id="main">
         <v-header sideBar="true" :isShowSideBar="isShowSideBar" :vrUrl="vRinfo.jumpUrl" :vrTitle="vRinfo.title" @breadcrumb="showSideBar">
-            <span slot="logo"><img class="logo" src="../assets/image/logo.png" alt="logo">今世缘景区欢迎您</span>
+            <span class="header-logo" slot="logo"><img class="logo" :src="logoImgUrl" alt="logo-title"></span>
         </v-header>
         <user-count></user-count>
         <!-- 首页滚动banner -->
         <div class="banner">
-            <div class="swiper-container" @click="showSideBar">
+            <div class="swiper-container" @click="closeSideBar">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="item in imageDataArr">
                        <img :src="item.INFO_IMAGE_URL" :alt="item.INFO_TITLE">
@@ -16,9 +16,9 @@
                 <div class="swiper-pagination"></div>
             </div>
             <nav class="right-side">
-                <router-link :to="{name: 'service', params: {type: 13}}">预订门票</router-link>
-                <router-link :to="{name: 'dropBox', params: {url: vRinfo.jumpUrl, title: vRinfo.title}}">虚拟旅游</router-link>
-                <a @click="showSideBar">更多功能</a>
+                <router-link :to="{name: 'service', params: {type: 13}}"><span>预订</span><span>门票</span></router-link>
+                <router-link :to="{name: 'dropBox', params: {url: vRinfo.jumpUrl, title: vRinfo.title}}"><span>虚拟</span><span>旅游</span></router-link>
+                <a @click="showSideBar"><span>更多</span><span>功能</span></a>
             </nav>
         </div>
         <v-footer :pathName="1"></v-footer>
@@ -39,23 +39,38 @@ export default {
             isApp: false,           // 是否是园区一体机
             isShowSideBar: false,
             imageDataArr: [],       // 首页轮播图
-            vRinfo: {
+            vRinfo: {               // 虚拟旅游
                 title: '',
                 jumpUrl: ''
-            }              // 虚拟旅游
+            },
+            logoImgUrl: ''
         }
     },
     components: {
         vHeader, userCount,  vFooter
     },
     created() {
-        this.isApp = this.$route.query && this.$route.query.app;
+        let isApp = window.localStorage ? localStorage.getItem('isApp') : Cookie.read('isApp');
         // 浏览器本地存储是否是一体机
-        if(window.localStorage) {
-            localStorage.setItem('isApp', this.isApp);
+        // 判断本地缓存里面是否已经存在isApp
+        if(isApp == 'true') {
+            this.logoImgUrl = '../static/logo/logo-red-pc.png';
         } else {
-            Cookie.wirte('isApp', this.isApp);
+            // 判断是否是第一次进来首页，如果是，则获取params的参数
+            this.isApp = this.$route.query && this.$route.query.app;
+            if(this.isApp == 'true') {
+                // 保存到全局变量中
+                if(window.localStorage) {
+                    localStorage.setItem('isApp', this.isApp);
+                } else {
+                    Cookie.wirte('isApp', this.isApp);
+                }
+                this.logoImgUrl = '../static/logo/logo-red-pc.png';
+            } else {
+                this.logoImgUrl = '../static/logo/logo-red-h5.png';
+            }
         }
+
     },
     mounted() {
         this.initPage();
@@ -87,6 +102,9 @@ export default {
         },  
         showSideBar() {
             this.isShowSideBar = !this.isShowSideBar;
+        },
+        closeSideBar() {
+            this.isShowSideBar = false;
         }
     }
 }
@@ -100,10 +118,15 @@ export default {
         text-align: center;
         color: #2c3e50;
     }
-    .logo {
-        width: 25px;
-        margin-right: 5px;
-        vertical-align: middle;
+    .header-logo {
+        display: inline-block;
+        width: 100%;
+        height: 40px;
+        box-sizing: border-box;
+        .logo {
+            height: 100%;
+            vertical-align: middle;
+        }
     }
     .banner {
         $right-side-size: 50px;
@@ -130,14 +153,21 @@ export default {
                 display: inline-block;
                 width: $right-side-size;
                 height: $right-side-size;
-                padding: 3px;
+                font-size: 0;
                 color: #fff;
                 background: #e60012;
-                font-size: 14px;
                 border: 2px solid #fff;
+                padding: 5px;
                 border-radius: 50%;
                 box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
                 box-sizing: border-box;
+                span {
+                    display: block;
+                    font-size: 14px;
+                    &:last-child {
+                        margin-top: -3px;
+                    }
+                }
                 &:not(:last-child) {
                     margin-bottom: 10px;
                 }
@@ -148,10 +178,8 @@ export default {
     // 适配一体机样式
     @media screen and  (min-width: 1000px) {
         $right-side-size: 150px;
-        .logo {
-            width: 48px;
-            margin-right: 10px;
-            vertical-align: middle;
+        .header-logo {
+            height: 100px;
         }
         .banner {
             .swiper-container {
@@ -160,14 +188,20 @@ export default {
             }
              .right-side {
                 right: 4%;
-                bottom: $right-side-size;
+                bottom: 50%;
                 width: $right-side-size;
+                transform: translate3d(0, 50%, 0);
                 a {
                     width: $right-side-size;
                     height: $right-side-size;
-                    font-size: 45px;
-                    padding: 5px;
+                    padding: 12px;
                     border: 5px solid #fff;
+                    span {
+                        font-size: 45px;
+                        &:last-child {
+                            margin-top: -10px;
+                        }
+                    }
                 }
             }
         }
