@@ -44,7 +44,7 @@
 			white-space: nowrap;
 			animation-delay: 1s;
 			animation-name: slide;
-			animation-duration: 60s;
+			animation-duration: 45s;
 			animation-iteration-count: infinite;
 		}
 	}

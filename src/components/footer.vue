@@ -25,13 +25,11 @@
 		data() {
 			return {
 				isShow: false,
-				// pathName : 'home',
 				navUrl : [0, 1, 2]
 			}
 		},
 		props: ['pathName'],
 		created() {
-			// this.pathName = this.$route.path;
 		},
 		methods: {
 			showNav(state) {
