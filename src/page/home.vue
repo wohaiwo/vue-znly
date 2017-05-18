@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
+                <div class="swiper-pagination swiper-pagination-white"></div>
             </div>
             <nav class="right-side">
                 <router-link :to="{name: 'service', params: {type: 13}}"><span>预订</span><span>门票</span></router-link>
