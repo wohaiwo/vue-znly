@@ -1,8 +1,10 @@
 <template>
     <div>
-	    <v-header goBack="true" :headTitle="title"></v-header>	
-		<iframe :src="url" frameborder="0">
-		</iframe>
+	    <v-header goBack="true" :headTitle="title"></v-header>
+	    <div class="content">
+			<iframe scrolling="yes" :src="url" frameborder="0" >
+			</iframe>
+	    </div>
     </div>
 </template>
 
@@ -22,24 +24,22 @@
 		components: {
 			vHeader
 		}
-	}
-</script>
+	};
+	</script>
+
 
 <style scoped lang="scss">
-	div {
-		width: 100%;
-		overflow: hidden;	
-		iframe {
-			width: 100%;
-			height: 100vh;
-			margin-top: 40px;
-		}
-	}
-	@media screen and (min-width: 1000px) {
-		div {
+	
+		.content {
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 100px;
+			bottom: 0;
 			iframe {
-				margin-top: 100px;
+				height: 100%;
+				width: 100%;
 			}
 		}
-	}
+
 </style>

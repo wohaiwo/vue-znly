@@ -17,7 +17,8 @@
             </div>
             <nav class="right-side">
                 <router-link :to="{name: 'service', params: {type: 13}}"><span>预订</span><span>门票</span></router-link>
-                <router-link :to="{name: 'dropBox', params: {url: vRinfo.jumpUrl, title: vRinfo.title}}"><span>虚拟</span><span>旅游</span></router-link>
+                <router-link v-if="isApp" :to="{name: 'dropBox', params: {url: vRinfo.jumpUrl, title: vRinfo.title}}"><span>虚拟</span><span>旅游</span></router-link>
+                <a v-if="!isApp" target="_blank" :href = "vRinfo.jumpUrl"><span>虚拟</span><span>旅游</span></a>
                 <a @click="showSideBar"><span>更多</span><span>功能</span></a>
             </nav>
         </div>
@@ -58,6 +59,7 @@ export default {
         // 判断本地缓存里面是否已经存在isApp
         if(isApp == 'true') {
             this.logoImgUrl = '../static/logo/logo-red-pc.png';
+            this.isApp = true;
         } else {
             // 判断是否是第一次进来首页，如果是，则获取params的参数
             this.isApp = this.$route.query && this.$route.query.app;
@@ -75,7 +77,6 @@ export default {
         }
         this.initPage();
         this.getVRTravel();
-
     },
     methods: {
         initPage() {
@@ -126,7 +127,6 @@ export default {
         box-sizing: border-box;
         .logo {
             height: 100%;
-            vertical-align: middle;
         }
     }
     .banner {
