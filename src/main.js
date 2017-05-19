@@ -10,7 +10,7 @@ import FastClick from 'FastClick';
 Vue.use(VueRouter);		// 加载vue-router插件
 Vue.prototype.$http = axios;
 
-// FastClick.attach(document.body);
+FastClick.attach(document.body);
 
 
 // 创建 router 实例，然后传 `routes` 配置
