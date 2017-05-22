@@ -24,13 +24,11 @@ module.exports = {
     assetsSubDirectory: 'static',    // 编译输出的二级目录
     assetsPublicPath: '/',           // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
     proxyTable: {
-        '/zhan': {
-            // target: 'http://192.168.110.160:8080/JSY/h5/', 
-            target: 'http://192.168.109.160:8080/JSY_H5/h5/',
-            // target: 'http://192.168.110.71:8080/JSY/h5/',
+        '/JSY_H5/h5/': {
+           target: 'http://travel.jinshiyuan.com.cn/JSY_H5/h5',
             changeOrigin: true,
             pathRewrite: {
-                '^/zhan': ''
+                '^/JSY_H5/h5/': ''
             }
         }
     }, // 需要 proxyTable 代理的接口（可跨域）
