@@ -30,6 +30,7 @@ module.exports = {
             changeOrigin: true,
             pathRewrite: {
                 '^/JSY_H5/h5': ''
+            }
         }
     }, // 需要 proxyTable 代理的接口（可跨域）
     // CSS Sourcemaps off by default because relative paths are "buggy"
