@@ -19,8 +19,6 @@ const router = new VueRouter({
 	routes
 });
 
-// 首次加载自动跳转到movie页面上去
-// router.push({name: 'movie'});
 // 创建和挂载根实例	
 var vm =  new Vue({
 	router,
