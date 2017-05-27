@@ -3,7 +3,6 @@
         <v-header goBack="true" headTitle="外部地图"></v-header>
         <div class="travel-box">
 			<div id="allmap"></div>
-			<div id="r-result"></div>
         </div>
 
     </div>
